@@ -1,5 +1,6 @@
 #include"Ransac.h"
 
+using namespace std;
 
 Ransac::Ransac()
 {
@@ -180,7 +181,7 @@ bool Ransac::GetResultCircle(stCircle& stC)
     return m_bCircle;
 }
 
-int Ransac::SumvUcharVctor(vector<uchar> &vec_s)
+int Ransac::SumvUcharVctor(vector<unsigned char> &vec_s)
 {
     int sum(0);
     for (size_t i = 0; i < vec_s.size(); i++)

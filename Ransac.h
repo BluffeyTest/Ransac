@@ -2,12 +2,9 @@
 
 #ifndef RANSAC_H
 #define RANSAC_H
-#include <opencv2/opencv.hpp>
 #include <ctime>
 
 #include"Struct2d.h"
-
-using namespace cv;
 
 /**
  * Ransac 参数.
@@ -46,8 +43,8 @@ private:
 
 	std::vector<Point> m_vec_SrcPoints;///原始点集
 	std::vector<Point> m_vec_Points;///实际处理过程当中的点集
-	std::vector<uchar> m_vec_bMask;//存储对应的点是不是符合当前拟合的模型
-	std::vector<uchar> m_vec_bSampleMask;//存储对应的点是不是已经充当过采样点
+	std::vector<unsigned char> m_vec_bMask;//存储对应的点是不是符合当前拟合的模型
+	std::vector<unsigned char> m_vec_bSampleMask;//存储对应的点是不是已经充当过采样点
 
 
 	std::vector<stCircle> m_vec_Circles;///检测出来的圆
@@ -83,8 +80,8 @@ private:
 	bool FitCircle();//拟合圆；
 	bool FitCircles();//拟合多个圆
 
-	int SumvUcharVctor(vector<uchar> &vec_s);
-	bool RandIndex(int ndataLen, vector<int>& vec_Index);
+	int SumvUcharVctor(std::vector<unsigned char> &vec_s);
+	bool RandIndex(int ndataLen, std::vector<int>& vec_Index);
 	int InnnerNums();//判断当前的模型的在内点距离内的点数
 	int InnnerLineNums();//判断当前的模型的在内点距离内的点数
 	int InnnerCircleNums();//判断当前的模型的在内点距离内的点数
