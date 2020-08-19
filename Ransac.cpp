@@ -1,3 +1,14 @@
+/**
+ * @file Ransac.cpp
+ * @author Bluffey (Bluffey@163.com)
+ * @brief 
+ * @version 0.1
+ * @date 2020-08-20
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
+
 #include"Ransac.h"
 
 using namespace std;
@@ -142,14 +153,14 @@ bool Ransac::FitCircle()
 			&& (m_Circle.dR> m_Para.dMaxR || m_Circle.dR < m_Para.dMinR)
             )
         {
-            Point pt(0, 0);
+            Pointd pt(0, 0);
             m_Circle = stCircle(pt, -1.);
             return false;
         }
     }
     else if (dScale < m_Para.dScale )
     {
-        Point pt(0, 0);
+        Pointd pt(0, 0);
         m_Circle = stCircle(pt, -1.);
         return false;
     }

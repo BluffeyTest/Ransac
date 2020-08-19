@@ -25,13 +25,15 @@ struct Point2f;
 struct Point2d;
 
 /**
- * @brief 圆、圆弧、直线、线段结构体
+ * @brief 圆、圆弧、直线、线段、椭圆、椭圆弧结构体
  * 
  */
 struct stCircle;
 struct stArc;
 struct stSegLine;
 struct stGenLine;
+struct stEllipse;///<暂时没有具体实现
+struct stArcEllipse;///<暂时没有具体实现
 
 /**
  * @brief 整形二维点
@@ -52,9 +54,9 @@ typedef struct Point2i
 	Point2i(Point2f _p2f) : x((int)(_p2f.x + 0.5)), y((int)(_p2f.y + 0.5)) {}
 	Point2i(Point2d _p2d) : x((int)(_p2d.x + 0.5)), y((int)(_p2d.y + 0.5)) {}
 
-	inline Point2i operator+(const Point2i &pt) const;
-	inline Point2i operator-(const Point2i &pt) const;
-	inline bool operator==(const Point2i &pt) const;
+	inline Point2i operator+(const Point2i &pt) const;	///<两点相加
+	inline Point2i operator-(const Point2i &pt) const;	///<两点相减
+	inline bool operator==(const Point2i &pt) const;	///<判断两点是否相等
 } Point;
 
 /**
@@ -107,34 +109,37 @@ typedef struct Point2d
 
 //两点距离
 /*inline*/ double Distance(Point &pt1, Point &pt2);
+double Distance(Point2d &pt1, Point2d &pt2);
 
-/// <summary>
-/// 圆
-/// 后期如果有需要最好还要兼容浮点型的点，精度才上得去
-/// </summary>
+/**
+ * @brief 圆
+ * 后期如果有需要最好还要兼容浮点型的点，精度才上得去
+ * 
+ */
 struct stCircle
 {
-	Point ptCenter;
+	Point2d ptCenter;
 	double dR;
-	stCircle() : ptCenter(Point(0, 0)), dR(0.0) {}
-	stCircle(Point &pt, double r) : ptCenter(pt), dR(r) {} ///<直径圆心生成圆
-	stCircle(Point &pt1, Point &pt2, Point &pt3);		   ///<三点生成圆
+	stCircle() : ptCenter(Point2d(0, 0)), dR(0.0) {}
+	stCircle(Point2d &pt, double r) : ptCenter(pt), dR(r) {} ///<直径圆心生成圆
+	stCircle(Point2d &pt1, Point2d &pt2, Point2d &pt3);		   ///<三点生成圆
 
 	inline bool operator==(const stCircle &stC) const;
-	stCircle Shift(Point &pt) const;
+	stCircle Shift(Point2d &pt) const;		//圆平移
 	inline bool Cross(stCircle &stC) const;	 //圆相交
 	inline bool Cross(stGenLine &stG) const; //圆与直线相交
 	inline bool Cross(stSegLine &stS) const; //圆与线段相交
 
 	inline double FromLine(stGenLine &stG) const; //圆与直线距离
-	/*inline*/ double FromPoint(Point &pt) const; //圆与直线距离
+	/*inline*/ double FromPoint(Point2d &pt) const; //圆与直线距离
 
 	friend std::ostream &operator<<(std::ostream &os, stCircle &stC);
 };
 
-/// <summary>
-/// 圆弧
-/// </summary>
+/**
+ * @brief 圆弧
+ * 
+ */
 struct stArc
 {
 	stCircle Circle;
@@ -147,9 +152,10 @@ struct stArc
 	friend std::ostream &operator<<(std::ostream &os, stArc &stArc);
 };
 
-/// <summary>
-/// 两点线段
-/// </summary>
+/**
+ * @brief 两点线段
+ * 
+ */
 struct stSegLine
 {
 	Point pt1;
@@ -158,27 +164,28 @@ struct stSegLine
 	stSegLine() : pt1(Point(0, 0)), pt2(Point(0, 0)) {}
 	stSegLine(Point &p1, Point &p2) : pt1(p1), pt2(p2) {}
 
-	inline bool operator==(stSegLine &stS) const;
+	inline bool operator==(stSegLine &stS) const;	///<两条线段是否相等
 
 	inline bool Cross(stSegLine &stS) const;	  ///<线段与线段相交
 	inline void GetGenLine(stGenLine &stG) const; ///<从线段获得直线
-	inline double Length() const;				  //线段长度
-	/*inline*/ double FromPoint(Point pt) const;  //线段到一个点的最短距离
+	inline double Length() const;				  ///<线段长度
+	/*inline*/ double FromPoint(Point pt) const;  ///<线段到一个点的最短距离
 
 	friend std::ostream &operator<<(std::ostream &os, stSegLine &stS);
 };
 
-/// <summary>
-/// 直线的标准方程
-/// </summary>
+/**
+ * @brief 直线的标准方程
+ * 
+ */
 struct stGenLine
 {
-	double da;
-	double db;
-	double dc;
+	double a;
+	double b;
+	double c;
 
-	stGenLine() : da(0.0), db(0.0), dc(0.0) {}
-	stGenLine(double a, double b, double c) : da(a), db(b), dc(c) {}
+	stGenLine() : a(0.0), b(0.0), c(0.0) {}
+	stGenLine(double _a, double _b, double _c) : a(_a), b(_b), c(_c) {}
 	stGenLine(Point &p1, Point &p2);
 	stGenLine(stSegLine &stS);
 
@@ -191,5 +198,49 @@ struct stGenLine
 	inline bool operator==(const stGenLine &stG) const; ///<两直线斜率在一定范围内判定为同一条
 	friend std::ostream &operator<<(std::ostream &os, stGenLine &stG);
 };
+
+/**
+ * @brief 椭圆
+ * 
+ */
+struct stEllipse
+{
+	Point2d center;	///<椭圆中心
+	double a;		///<椭圆长半轴长
+	double b;		///<椭圆短半轴长
+	double angle;	///<旋转角度,角度值
+
+	stEllipse():center(Point2d(0.0,0.0)),a(0.0),b(0.0),angle(0.0){}
+	stEllipse(stEllipseNormal &stEN);
+	//stEllipse()
+};
+
+
+/**
+ * @brief 椭圆的一般方程式ax^2+by^2+cxy+dx+ey = 0;
+ * 二次型的表述：
+ * 
+ */
+typedef struct stEllipseNormal
+{
+	double A;
+	double B;
+	double C;
+	double D;
+	double E;
+
+	stEllipseNormal():A(0.0),B(0.0),C(0.0),D(0.0),E(0.0){}
+	stEllipseNormal(double _a,double _b,double _c,double _d,double _e):
+		A(_a),B(_b),C(_c),D(_d),E(_e){}				///<从已经有的参数复制
+	stEllipseNormal(Pointd &pt1,Pointd &pt2,Pointd &pt3, 
+		Pointd &pt4,Pointd &pt5,Pointd &pt6);		///<从六个点用线性代数导出
+	stEllipseNormal(std::vector<Point2f> &vPts);	///<从点集当中用最小二乘法拟合出来椭圆
+	stEllipseNormal(stEllipse &_stE);
+	
+	
+
+
+}EllipseStd;
+
 
 #endif // !STRUCT2D_H

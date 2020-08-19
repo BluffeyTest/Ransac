@@ -1,3 +1,13 @@
+/**
+ * @file Ransac.h
+ * @author Bluffey (Bluffey@163.com)
+ * @brief 
+ * @version 0.1
+ * @date 2020-08-20
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
 #pragma once
 
 #ifndef RANSAC_H
@@ -5,6 +15,11 @@
 #include <ctime>
 
 #include"Struct2d.h"
+
+/**
+*
+what is .dump?
+*/
 
 /**
  * Ransac 参数.
@@ -42,7 +57,7 @@ private:
 	RansacPara m_Para;//参数
 
 	std::vector<Point> m_vec_SrcPoints;///原始点集
-	std::vector<Point> m_vec_Points;///实际处理过程当中的点集
+	std::vector<Pointd> m_vec_Points;///实际处理过程当中的点集
 	std::vector<unsigned char> m_vec_bMask;//存储对应的点是不是符合当前拟合的模型
 	std::vector<unsigned char> m_vec_bSampleMask;//存储对应的点是不是已经充当过采样点
 
