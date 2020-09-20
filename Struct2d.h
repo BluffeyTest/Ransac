@@ -4,6 +4,7 @@
  * @brief 二维平面结构体
  * @version 0.1
  * @date 2020-08-18
+ * @note inline 的成员函数的生命和定义需要卸载同一个文件里，不然无法链接
  * 
  * @copyright Copyright (c) 2020
  * 
@@ -51,12 +52,15 @@ typedef struct Point2i
 	Point2i(double _x, double _y) : x((int)(_x + 0.5)), y((int)(_y + 0.5)) {}
 
 	//Point2i(Point _p2):x(_p2.x),y(p2.y){}
-	Point2i(Point2f _p2f) : x((int)(_p2f.x + 0.5)), y((int)(_p2f.y + 0.5)) {}
-	Point2i(Point2d _p2d) : x((int)(_p2d.x + 0.5)), y((int)(_p2d.y + 0.5)) {}
+	//Point2i(Point2f _p2f) : x((int)(_p2f.x + 0.5)), y((int)(_p2f.y + 0.5)) {}
+	//Point2i(Point2d _p2d) : x((int)(_p2d.x + 0.5)), y((int)(_p2d.y + 0.5)) {}
 
-	inline Point2i operator+(const Point2i &pt) const;	///<两点相加
-	inline Point2i operator-(const Point2i &pt) const;	///<两点相减
-	inline bool operator==(const Point2i &pt) const;	///<判断两点是否相等
+	///< 备注，内敛函数总是不能如愿运行，故放弃内联
+	/*inline*/ Point2i operator+(const Point2i &pt) const;	///<两点相加
+	/*inline*/ Point2i operator-(const Point2i &pt) const;	///<两点相减
+	/*inline*/ bool operator==(const Point2i &pt) const;	///<判断两点是否相等
+
+	friend std::ostream &operator<<(std::ostream &os, /*const*/ Point2i &pt);
 } Point;
 
 /**
@@ -75,11 +79,11 @@ typedef struct Point2f
 	Point2f(double _x, double _y) : x((float)_x), y((float)_y) {}
 
 	Point2f(Point2i _p2i) : x((float)_p2i.x), y((float)_p2i.y) {}
-	Point2f(Point2d _p2d) : x((float)_p2d.x), y((float)_p2d.y) {}
+	//Point2f(Point2d _p2d) : x((float)_p2d.x), y((float)_p2d.y) {}
 
-	inline Point2f operator+(const Point2f &pt) const;
-	inline Point2f operator-(const Point2f &pt) const;
-	inline bool operator==(const Point2f &pt) const;
+	/*inline*/ Point2f operator+(const Point2f &pt) const;
+	/*inline*/ Point2f operator-(const Point2f &pt) const;
+	/*inline*/ bool operator==(const Point2f &pt) const;
 
 
 }Pointf;
@@ -102,9 +106,11 @@ typedef struct Point2d
 	Point2d(Point2i _p2i) : x((double)_p2i.x), y((double)_p2i.y) {}
 	Point2d(Point2f _p2f) : x((double)_p2f.x), y((double)_p2f.y) {}
 
-	inline Point2d operator+(const Point2d &pt) const;
-	inline Point2d operator-(const Point2d &pt) const;
-	inline bool operator==(const Point2d &pt) const;
+	/*inline*/ Point2d operator+(const Point2d &pt) const;
+	/*inline*/ Point2d operator-(const Point2d &pt) const;
+	/*inline*/ bool operator==(const Point2d &pt) const;
+
+	//friend ostream & operator<<(ostream &o, const Point2d &pt);
 }Pointd;
 
 //两点距离
@@ -124,13 +130,13 @@ struct stCircle
 	stCircle(Point2d &pt, double r) : ptCenter(pt), dR(r) {} ///<直径圆心生成圆
 	stCircle(Point2d &pt1, Point2d &pt2, Point2d &pt3);		   ///<三点生成圆
 
-	inline bool operator==(const stCircle &stC) const;
+	/*inline*/ bool operator==(const stCircle &stC) const;
 	stCircle Shift(Point2d &pt) const;		//圆平移
-	inline bool Cross(stCircle &stC) const;	 //圆相交
-	inline bool Cross(stGenLine &stG) const; //圆与直线相交
-	inline bool Cross(stSegLine &stS) const; //圆与线段相交
+	/*inline*/ bool Cross(stCircle &stC) const;	 //圆相交
+	/*inline*/ bool Cross(stGenLine &stG) const; //圆与直线相交
+	/*inline*/ bool Cross(stSegLine &stS) const; //圆与线段相交
 
-	inline double FromLine(stGenLine &stG) const; //圆与直线距离
+	/*inline*/ double FromLine(stGenLine &stG) const; //圆与直线距离
 	/*inline*/ double FromPoint(Point2d &pt) const; //圆与直线距离
 
 	friend std::ostream &operator<<(std::ostream &os, stCircle &stC);
@@ -164,12 +170,14 @@ struct stSegLine
 	stSegLine() : pt1(Point(0, 0)), pt2(Point(0, 0)) {}
 	stSegLine(Point &p1, Point &p2) : pt1(p1), pt2(p2) {}
 
-	inline bool operator==(stSegLine &stS) const;	///<两条线段是否相等
+	/*inline*/ bool operator==(stSegLine &stS) const;	///<两条线段是否相等
 
-	inline bool Cross(stSegLine &stS) const;	  ///<线段与线段相交
-	inline void GetGenLine(stGenLine &stG) const; ///<从线段获得直线
-	inline double Length() const;				  ///<线段长度
+	/*inline*/ bool Cross(stSegLine &stS) const;	  ///<线段与线段相交
+	/*inline*/ void GetGenLine(stGenLine &stG) const; ///<从线段获得直线
+	/*inline*/ double Length() const;				  ///<线段长度
 	/*inline*/ double FromPoint(Point pt) const;  ///<线段到一个点的最短距离
+	/*inline*/ double FromPoint(Point2d pt) const;  ///<线段到一个点的最短距离
+
 
 	friend std::ostream &operator<<(std::ostream &os, stSegLine &stS);
 };
@@ -189,13 +197,13 @@ struct stGenLine
 	stGenLine(Point &p1, Point &p2);
 	stGenLine(stSegLine &stS);
 
-	inline bool Cross(stGenLine &stG) const;  ///<直线与直线相交
-	inline bool Cross(stSegLine &stS) const;  ///<直线与线段相交
-	inline double FromPoint(Point &pt) const; ///<直线与点的距离
+	/*inline*/ bool Cross(stGenLine &stG) const;  ///<直线与直线相交
+	/*inline*/ bool Cross(stSegLine &stS) const;  ///<直线与线段相交
+	/*inline*/ double FromPoint(Point &pt) const; ///<直线与点的距离
 
 	/*inline*/ bool operator||(const stGenLine &stG) const; ///<两直线平行
 
-	inline bool operator==(const stGenLine &stG) const; ///<两直线斜率在一定范围内判定为同一条
+	/*inline*/ bool operator==(const stGenLine &stG) const; ///<两直线斜率在一定范围内判定为同一条
 	friend std::ostream &operator<<(std::ostream &os, stGenLine &stG);
 };
 
@@ -211,7 +219,7 @@ struct stEllipse
 	double angle;	///<旋转角度,角度值
 
 	stEllipse():center(Point2d(0.0,0.0)),a(0.0),b(0.0),angle(0.0){}
-	stEllipse(stEllipseNormal &stEN);
+	//stEllipse(stEllipseNormal &stEN);
 	//stEllipse()
 };
 

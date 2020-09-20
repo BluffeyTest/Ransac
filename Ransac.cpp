@@ -26,8 +26,8 @@ Ransac::~Ransac()
 /**
  * 输入需要的点.
  * 
- * \param vec_pts
- * \return 
+ * @param vec_pts
+ * @return 
  */
 bool Ransac::InputPoints(std::vector<Point>& vec_pts)
 {
@@ -262,6 +262,11 @@ int Ransac::InnnerLineNums()
     return sum;
 }
 
+/**
+ * @brief 
+ * 
+ * @return int 
+ */
 int Ransac::InnnerCircleNums()
 {
     int sum(0);

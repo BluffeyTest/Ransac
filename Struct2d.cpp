@@ -18,7 +18,7 @@ using namespace std;
  * @param pt 
  * @return Point2i 
  */
-inline Point2i Point2i::operator+(const Point2i &pt) const
+/*inline*/ Point2i Point2i::operator+(const Point2i &pt) const
 {
     return Point2i(this->x + pt.x, this->y + pt.y);
 }
@@ -29,7 +29,7 @@ inline Point2i Point2i::operator+(const Point2i &pt) const
  * @param pt 
  * @return Point2i 
  */
-inline Point2i Point2i::operator-(const Point2i &pt) const
+/*inline*/ Point2i Point2i::operator-(const Point2i &pt) const
 {
     return Point2i(this->x - pt.x, this->y - pt.y);
 }
@@ -40,9 +40,19 @@ inline Point2i Point2i::operator-(const Point2i &pt) const
  * @param pt 
  * @return Point2i 
  */
-inline bool Point2i::operator==(const Point2i &pt) const
+/*inline*/ bool Point2i::operator==(const Point2i &pt) const
 {
     return (this->x == pt.x && this->y == pt.y);
+}
+
+/**
+ * @brief 重载点的输出运算符
+ * 
+ */
+ostream &operator<<(ostream &os, /*const*/ Point2i &pt)
+{
+    os<<"( "<<pt.x<<", "<<pt.y<<" )";
+    return os;
 }
 
 /**
@@ -51,7 +61,7 @@ inline bool Point2i::operator==(const Point2i &pt) const
  * @param pt 
  * @return Point2f 
  */
-inline Point2f Point2f::operator+(const Point2f &pt) const
+/*inline*/ Point2f Point2f::operator+(const Point2f &pt) const
 {
     return Point2f(this->x + pt.x, this->y + pt.y);
      
@@ -63,7 +73,7 @@ inline Point2f Point2f::operator+(const Point2f &pt) const
  * @param pt 
  * @return Point2f 
  */
-inline Point2f Point2f::operator-(const Point2f &pt) const
+0/*inline*/ Point2f Point2f::operator-(const Point2f &pt) const
 {
     return Point2f(this->x - pt.x, this->y - pt.y);
 }
@@ -75,7 +85,7 @@ inline Point2f Point2f::operator-(const Point2f &pt) const
  * @param pt 
  * @return bool 
  */
-inline bool Point2f::operator==(const Point2f &pt) const
+/*inline*/ bool Point2f::operator==(const Point2f &pt) const
 {
     const double eps = 1e-2;//float的精度只有六位，算上整数位，一般能有三维小数位是保证精度的就不错了
     return (fabs(this->x - pt.x)<eps && fabs(this->y - pt.y)<eps );
@@ -87,7 +97,7 @@ inline bool Point2f::operator==(const Point2f &pt) const
  * @param pt 
  * @return Point2d 
  */
-inline Point2d Point2d::operator+(const Point2d &pt) const
+/*inline*/ Point2d Point2d::operator+(const Point2d &pt) const
 {
     return Point2d(this->x + pt.x, this->y + pt.y);
      
@@ -99,7 +109,7 @@ inline Point2d Point2d::operator+(const Point2d &pt) const
  * @param pt 
  * @return Point2d 
  */
-inline Point2d Point2d::operator-(const Point2d &pt) const
+/*inline*/ Point2d Point2d::operator-(const Point2d &pt) const
 {
     return Point2d(this->x - pt.x, this->y - pt.y);
 }
@@ -110,7 +120,7 @@ inline Point2d Point2d::operator-(const Point2d &pt) const
  * @param pt 
  * @return bool 
  */
-inline bool Point2d::operator==(const Point2d &pt) const
+/*inline*/ bool Point2d::operator==(const Point2d &pt) const
 {
     const double eps = 1e-6;//double的精度有15位，算上整数位，所以问题小一些
     return (fabs(this->x - pt.x)<eps && fabs(this->y - pt.y)<eps );
@@ -149,7 +159,7 @@ stCircle::stCircle(Point2d &pt1, Point2d &pt2, Point2d &pt3)
     ptCenter = Point2d(x0, y0);
 }
 
-inline bool stCircle::operator==(const stCircle &stC) const
+/*inline*/ bool stCircle::operator==(const stCircle &stC) const
 {
     if (this->ptCenter.x == stC.ptCenter.x && this->ptCenter.y == stC.ptCenter.y && this->dR == stC.dR)
         return true;
@@ -162,7 +172,7 @@ stCircle stCircle::Shift(Point2d &pt) const
     return stCircle(pt1, this->dR);
 }
 
-inline bool stCircle::Cross(stCircle &stC) const
+/*inline*/ bool stCircle::Cross(stCircle &stC) const
 {
     double dDist = sqrt(pow(this->ptCenter.x - stC.ptCenter.x, 2) + pow(this->ptCenter.y - stC.ptCenter.y, 2));
     if (dDist == (this->dR + stC.dR))
@@ -171,7 +181,7 @@ inline bool stCircle::Cross(stCircle &stC) const
 }
 
 //圆与直线相交
-inline bool stCircle::Cross(stGenLine &stG) const
+/*inline*/ bool st/*Circle*/::Cross(stGenLine &stG) const
 {
     double dDistance = this->FromLine(stG); //stG.FromPoint(this->ptCenter);
     if (this->dR < dDistance)
@@ -181,7 +191,7 @@ inline bool stCircle::Cross(stGenLine &stG) const
 
 //待优化
 //这儿应该用跨立、快排处理
-inline bool stCircle::Cross(stSegLine &stS) const
+/*inline*/ bool stCircle::Cros/*s(stSe*/gLine &stS) const
 {
     stGenLine stG = stGenLine(stS);
     double d1 = sqrt(pow(stS.pt1.x - this->ptCenter.x, 2) + pow(stS.pt1.y - this->ptCenter.y, 2)); ///<线段第一个点到圆心的距离
@@ -197,7 +207,7 @@ inline bool stCircle::Cross(stSegLine &stS) const
     return false;
 }
 
-inline double stCircle::FromLine(stGenLine &stG) const
+/*inline*/ double stCircle::FromLine(stGenLine &stG) const
 {
     double dDistance = fabs(stG.a * this->ptCenter.x + stG.b * this->ptCenter.y + stG.c) / sqrt(pow(stG.a, 2) + pow(stG.b, 2));
     return dDistance;
@@ -224,7 +234,7 @@ stGenLine::stGenLine(stSegLine &stS)
     this->c = (double)(p1.x * p2.y - p2.x * p1.y);
 }
 
-inline double stGenLine::FromPoint(Point &pt) const
+/*inline*/ double stGenLine::FromPoint(Point &pt) const
 {
     double dDistance = fabs(this->a * pt.x + this->b * pt.y + this->c) / sqrt(pow(this->a, 2) + pow(this->b, 2));
     return dDistance;
@@ -289,6 +299,30 @@ inline double stSegLine::Length() const
 }
 
 /*inline*/ double stSegLine::FromPoint(Point pt) const
+{
+    double r = ((pt.x - this->pt1.x) * (this->pt2.x - this->pt1.x) 
+        + (pt.y - this->pt1.y) * (this->pt2.y - this->pt1.y)) / this->Length();
+    double dAP2 = pow(this->pt1.x - pt.x, 2) + pow(this->pt1.y - pt.y, 2);
+    double dBP2 = pow(pt.x - this->pt2.x, 2) + pow(pt.y - this->pt2.y, 2);
+    if (r <= 0)
+        return sqrt(dAP2); //第一种情况, 返回AP的长
+    else if (r >= 1)
+        return sqrt(dBP2); //第二种情况, 返回BP的长度
+    else                   //第三种情况, 返回PC的长度
+    {
+        double AC = r * this->Length(); //先求AC的长度,(AC=r*|AB|)
+        return sqrt(dAP2 - AC * AC);    //再勾股定理返回PC的长度
+    }
+    return 0.0;
+}
+
+/**
+ * @brief 
+ * 
+ * @param pt 
+ * @return double 
+ */
+/*inline*/ double stSegLine::FromPoint(Point2d pt) const
 {
     double r = ((pt.x - this->pt1.x) * (this->pt2.x - this->pt1.x) 
         + (pt.y - this->pt1.y) * (this->pt2.y - this->pt1.y)) / this->Length();
