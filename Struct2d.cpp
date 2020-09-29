@@ -73,7 +73,7 @@ ostream &operator<<(ostream &os, /*const*/ Point2i &pt)
  * @param pt 
  * @return Point2f 
  */
-0/*inline*/ Point2f Point2f::operator-(const Point2f &pt) const
+/*inline*/ Point2f Point2f::operator-(const Point2f &pt) const
 {
     return Point2f(this->x - pt.x, this->y - pt.y);
 }
@@ -159,20 +159,40 @@ stCircle::stCircle(Point2d &pt1, Point2d &pt2, Point2d &pt3)
     ptCenter = Point2d(x0, y0);
 }
 
-/*inline*/ bool stCircle::operator==(const stCircle &stC) const
+/**
+ * @brief 比较两个圆是否相等
+ * 
+ * @param stC 另一个圆
+ * @return true 相等
+ * @return false 不相等
+ */
+bool stCircle::operator==(const stCircle &stC) const
 {
     if (this->ptCenter.x == stC.ptCenter.x && this->ptCenter.y == stC.ptCenter.y && this->dR == stC.dR)
         return true;
     return false;
 }
 
+/**
+ * @brief 圆的平移
+ * 
+ * @param pt 平移向量
+ * @return stCircle 新的圆
+ */
 stCircle stCircle::Shift(Point2d &pt) const
 {
     Point2d pt1 = this->ptCenter + pt;
     return stCircle(pt1, this->dR);
 }
 
-/*inline*/ bool stCircle::Cross(stCircle &stC) const
+/**
+ * @brief 两个圆是否相交
+ * 
+ * @param stC 另一个圆
+ * @return true 
+ * @return false 
+ */
+bool stCircle::Cross(stCircle &stC) const
 {
     double dDist = sqrt(pow(this->ptCenter.x - stC.ptCenter.x, 2) + pow(this->ptCenter.y - stC.ptCenter.y, 2));
     if (dDist == (this->dR + stC.dR))
@@ -181,7 +201,7 @@ stCircle stCircle::Shift(Point2d &pt) const
 }
 
 //圆与直线相交
-/*inline*/ bool st/*Circle*/::Cross(stGenLine &stG) const
+/*inline*/ bool stCircle::Cross(stGenLine &stG) const
 {
     double dDistance = this->FromLine(stG); //stG.FromPoint(this->ptCenter);
     if (this->dR < dDistance)
@@ -191,7 +211,7 @@ stCircle stCircle::Shift(Point2d &pt) const
 
 //待优化
 //这儿应该用跨立、快排处理
-/*inline*/ bool stCircle::Cros/*s(stSe*/gLine &stS) const
+/*inline*/ bool stCircle::Cross(stSegLine &stS) const
 {
     stGenLine stG = stGenLine(stS);
     double d1 = sqrt(pow(stS.pt1.x - this->ptCenter.x, 2) + pow(stS.pt1.y - this->ptCenter.y, 2)); ///<线段第一个点到圆心的距离
