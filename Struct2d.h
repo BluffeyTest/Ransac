@@ -194,6 +194,8 @@ struct stGenLine
 
 	stGenLine() : a(0.0), b(0.0), c(0.0) {}
 	stGenLine(double _a, double _b, double _c) : a(_a), b(_b), c(_c) {}
+	
+	stGenLine(Pointd &p1, Pointd &p2);
 	stGenLine(Point &p1, Point &p2);
 	stGenLine(stSegLine &stS);
 

@@ -245,6 +245,13 @@ stGenLine::stGenLine(Point &p1, Point &p2)
     this->c = (double)(p1.x * p2.y - p2.x * p1.y);
 }
 
+stGenLine::stGenLine(Pointd &p1, Pointd &p2)
+{
+    this->a = (double)(p1.y - p2.y);
+    this->b = (double)(p2.x - p1.x);
+    this->c = (double)(p1.x * p2.y - p2.x * p1.y);
+}
+
 stGenLine::stGenLine(stSegLine &stS)
 {
     Point &p1 = stS.pt1;
