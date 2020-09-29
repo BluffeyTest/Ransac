@@ -1,7 +1,9 @@
 /**
  * @file Ransac.cpp
  * @author Bluffey (Bluffey@163.com)
- * @brief 
+ * @brief 使用Ransac拟合二维图形
+ * @note 后续可能会添加三位平面，三维球，三维椭球，以及二维椭圆的拟合
+ *      可能会大更，增加命名空间，或者不再使用类进行编写。
  * @version 0.1
  * @date 2020-08-20
  * 
@@ -49,44 +51,112 @@ bool Ransac::InputPoints(std::vector<Point>& vec_pts)
     return true;
 }
 
+/**
+ * @brief 输入参数
+ * 
+ * @param stR 
+ * @return true 
+ * @return false 
+ */
 bool Ransac::InputPara(RansacPara& stR)
 {
     m_Para = stR;
     return false;
 }
 
+
+/**
+ * @brief 运行拟合
+ * 
+ * @return true 
+ * @return false 
+ */
 bool Ransac::Run()
 {
     switch (m_Para.type)
     {
-    case RansacPara::RASANC_SEG_LINE:
+    case RansacPara::FIT_LINE:
         m_bSegLine = FitSegLine(); break;
-    case RansacPara::RASANC_SEG_LINES:
+    case RansacPara::FIT_LINES:
         FitSegLines(); break;
-    case RansacPara::RASANC_SEG_CIRCLE:
+    case RansacPara::FIT_CIRCLE:
         m_bCircle = FitCircle(); break;
-    case RansacPara::RASANC_SEG_CIRCLES:FitCircles(); break;
+    case RansacPara::FIT_CIRCLES:FitCircles(); break;
     default:
         break;
     }
     return false;
 }
 
+/**
+ * @brief 拟合线
+ * 
+ * @return true 拟合成功
+ * @return false 拟合失败
+ */
 bool Ransac::FitSegLine()
 {
-    return false;
+    size_t nSampleLen = m_vec_Points.size();
+    int nInners(0);
+    vector<int> vec_index;
+    for(size_t i = 0;i<m_Para.nIters;i++)
+    {
+        //随机取点
+        if (SumvUcharVctor(m_vec_bSampleMask) != nSampleLen)
+        {
+            RandIndex(nSampleLen, vec_index);
+        }
+        else break;
+       
+        //取得当前直线
+        m_CurrentSegLine = stGenLine(m_vec_Points[vec_index[0]], m_vec_Points[vec_index[1]]);
+
+        //判断当前直线的内点数量，并更新模型
+        int nCurentInners = InnnerNums();
+        if(nInners < nCurentInners)
+        { 
+            nInners = nCurentInners;
+            m_SegLine = m_CurrentSegLine;          
+        }
+
+
+    }
+
+    //判断是否有模型
+    double dScale = (double)nInners / nSampleLen;
+    if (m_Para.dScale < 1e-5)
+    {
+        //将最好的模型拿来做最小二乘
+        //暂时直接扔出去
+
+		return true;
+    }
+    else if (dScale < m_Para.dScale )
+    {
+        m_SegLine = stGenLine(0.,0.,0.);
+        return false;
+    }
+
+    return true;
 }
 
 
+/**
+ * @brief 拟合多条直线，涉及到剔除已经拟合的直线的点问题，和已经拟合的结果返回的问题
+ * @note 暂时不添加，知道有需要的时候
+ * @return true 
+ * @return false 
+ */
 bool Ransac::FitSegLines()
 {
     return false;
 }
 
 /**
- * Ransac拟合圆.
+ * @brief 拟合圆
  * 
- * \return 
+ * @return true 拟合成功
+ * @return false 拟合失败
  */
 bool Ransac::FitCircle()
 {
@@ -169,16 +239,35 @@ bool Ransac::FitCircle()
     return true;
 }
 
+/**
+ * @brief 拟合多个圆
+ * @note 暂时不添加，直到有需要的时候
+ * @return true 
+ * @return false 
+ */
 bool Ransac::FitCircles()
 {
     return false;
 }
 
+/**
+ * @brief 获取结果，尚未有较好的返回方式
+ * 
+ * @return true 
+ * @return false 
+ */
 bool Ransac::GetResult()
 {
     return false;
 }
 
+/**
+ * @brief 返回圆的结果
+ * 
+ * @param[out] stC 返回的圆
+ * @return true 
+ * @return false 
+ */
 bool Ransac::GetResultCircle(stCircle& stC)
 {
     if (m_bCircle)
@@ -209,10 +298,10 @@ bool Ransac::RandIndex(int ndataLen, vector<int> &vec_Index)
     vec_Index.clear();
     switch (m_Para.type)
     {
-    case RansacPara::RASANC_SEG_LINE:
-    case RansacPara::RASANC_SEG_LINES:nNums = 2; break;
-    case RansacPara::RASANC_SEG_CIRCLE:
-    case RansacPara::RASANC_SEG_CIRCLES:nNums = 3; break;
+    case RansacPara::FIT_LINE:
+    case RansacPara::FIT_LINES:nNums = 2; break;
+    case RansacPara::FIT_CIRCLE:
+    case RansacPara::FIT_CIRCLES:nNums = 3; break;
     default:nNums = 2;
         break;
     }
@@ -239,16 +328,22 @@ int Ransac::InnnerNums()
 {
     switch (m_Para.type)
     {
-    case RansacPara::RASANC_SEG_LINE:return InnnerLineNums(); break;//break是预防修改的
-    case RansacPara::RASANC_SEG_LINES:; break;
-    case RansacPara::RASANC_SEG_CIRCLE:return InnnerCircleNums(); break;
-    case RansacPara::RASANC_SEG_CIRCLES:; break;
+    case RansacPara::FIT_LINE:return InnnerLineNums(); break;//break是预防修改的
+    case RansacPara::FIT_LINES:; break;
+    case RansacPara::FIT_CIRCLE:return InnnerCircleNums(); break;
+    case RansacPara::FIT_CIRCLES:; break;
     default:
         break;
     }
     return 0;
 }
 
+
+/**
+ * @brief 计算直线的内点数量
+ * 
+ * @return int 
+ */
 int Ransac::InnnerLineNums()
 {
     int sum(0);
@@ -263,7 +358,7 @@ int Ransac::InnnerLineNums()
 }
 
 /**
- * @brief 
+ * @brief 计算圆的内点数量
  * 
  * @return int 
  */

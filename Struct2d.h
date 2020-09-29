@@ -170,13 +170,13 @@ struct stSegLine
 	stSegLine() : pt1(Point(0, 0)), pt2(Point(0, 0)) {}
 	stSegLine(Point &p1, Point &p2) : pt1(p1), pt2(p2) {}
 
-	/*inline*/ bool operator==(stSegLine &stS) const;	///<两条线段是否相等
+	bool operator==(stSegLine &stS) const;	///<两条线段是否相等
 
-	/*inline*/ bool Cross(stSegLine &stS) const;	  ///<线段与线段相交
-	/*inline*/ void GetGenLine(stGenLine &stG) const; ///<从线段获得直线
-	/*inline*/ double Length() const;				  ///<线段长度
-	/*inline*/ double FromPoint(Point pt) const;  ///<线段到一个点的最短距离
-	/*inline*/ double FromPoint(Point2d pt) const;  ///<线段到一个点的最短距离
+	bool Cross(stSegLine &stS) const;	  ///<线段与线段相交
+	void GetGenLine(stGenLine &stG) const; ///<从线段获得直线
+	double Length() const;				  ///<线段长度
+	double FromPoint(Point pt) const;  ///<线段到一个点的最短距离
+	double FromPoint(Point2d pt) const;  ///<线段到一个点的最短距离
 
 
 	friend std::ostream &operator<<(std::ostream &os, stSegLine &stS);
@@ -197,13 +197,13 @@ struct stGenLine
 	stGenLine(Point &p1, Point &p2);
 	stGenLine(stSegLine &stS);
 
-	/*inline*/ bool Cross(stGenLine &stG) const;  ///<直线与直线相交
-	/*inline*/ bool Cross(stSegLine &stS) const;  ///<直线与线段相交
-	/*inline*/ double FromPoint(Point &pt) const; ///<直线与点的距离
+	bool Cross(stGenLine &stG) const;  ///<直线与直线相交
+	bool Cross(stSegLine &stS) const;  ///<直线与线段相交
+	double FromPoint(Point &pt) const; ///<直线与点的距离
 
-	/*inline*/ bool operator||(const stGenLine &stG) const; ///<两直线平行
+	bool operator||(const stGenLine &stG) const; ///<两直线平行
 
-	/*inline*/ bool operator==(const stGenLine &stG) const; ///<两直线斜率在一定范围内判定为同一条
+	bool operator==(const stGenLine &stG) const; ///<两直线斜率在一定范围内判定为同一条
 	friend std::ostream &operator<<(std::ostream &os, stGenLine &stG);
 };
 

@@ -28,10 +28,10 @@ typedef struct stRansacPara
 {
 	enum emFitType
 	{
-		RASANC_SEG_LINE = 0,
-		RASANC_SEG_LINES = 1,
-		RASANC_SEG_CIRCLE = 2,
-		RASANC_SEG_CIRCLES = 3,
+		FIT_LINE = 0,
+		FIT_LINES = 1,
+		FIT_CIRCLE = 2,
+		FIT_CIRCLES = 3,
 	};
 	emFitType type;//拟合类型
 	double dInner;//内点距离
@@ -41,7 +41,7 @@ typedef struct stRansacPara
 	double dMinR;//限制最小直径
 	double dMaxR;//限制最大直径
 
-	stRansacPara():type(RASANC_SEG_LINE), dInner(2.0), dScale(0.9), nIters(50),dMinR(-1.0),dMaxR(-1.0){}
+	stRansacPara():type(FIT_LINE), dInner(2.0), dScale(0.9), nIters(50),dMinR(-1.0),dMaxR(-1.0){}
 	stRansacPara(emFitType t, double in, double s, int it):type(t), dInner(in), dScale(s), nIters(it) , dMinR(-1), dMaxR(-1){}
 	stRansacPara(emFitType t, double in, double s, int it, double min,double max):type(t), dInner(in), dScale(s), nIters(it) ,  dMinR(min), dMaxR(max){}
 
@@ -95,7 +95,7 @@ private:
 	bool FitCircle();//拟合圆；
 	bool FitCircles();//拟合多个圆
 
-	int SumvUcharVctor(std::vector<unsigned char> &vec_s);
+	int SumvUcharVctor(std::vector<unsigned char> &vec_s);//计数，感觉可以优化的样子
 	bool RandIndex(int ndataLen, std::vector<int>& vec_Index);
 	int InnnerNums();//判断当前的模型的在内点距离内的点数
 	int InnnerLineNums();//判断当前的模型的在内点距离内的点数
