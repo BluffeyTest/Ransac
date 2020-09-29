@@ -63,13 +63,13 @@ private:
 
 
 	std::vector<stCircle> m_vec_Circles;///检测出来的圆
-	std::vector<stSegLine> m_vec_SegLines;//检测出来的线段
+	std::vector<stGenLine> m_vec_SegLines;//检测出来的线段
 
 	stCircle m_Circle;//返回单个圆
-	stSegLine m_SegLine;//返回的单个线段
+	stGenLine m_SegLine;//返回的单个线段
 
 	stCircle m_CurrentCircle;//正在检测的单个圆
-	stSegLine m_CurrentSegLine;//正在检测的单个线段
+	stGenLine m_CurrentSegLine;//正在检测的单个线段
 
 	bool m_bCircle;//圆检测是否成功
 	bool m_bSegLine;//直线检测是否成功
