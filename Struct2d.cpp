@@ -261,7 +261,13 @@ stGenLine::stGenLine(stSegLine &stS)
     this->c = (double)(p1.x * p2.y - p2.x * p1.y);
 }
 
-/*inline*/ double stGenLine::FromPoint(Point &pt) const
+double stGenLine::FromPoint(Point &pt) const
+{
+    double dDistance = fabs(this->a * pt.x + this->b * pt.y + this->c) / sqrt(pow(this->a, 2) + pow(this->b, 2));
+    return dDistance;
+}
+
+double stGenLine::FromPoint(Pointd &pt) const
 {
     double dDistance = fabs(this->a * pt.x + this->b * pt.y + this->c) / sqrt(pow(this->a, 2) + pow(this->b, 2));
     return dDistance;

@@ -17,6 +17,7 @@
 //#include <opencv2/opencv.hpp>
 #include <algorithm>
 #include <vector>
+#include <cmath>
 
 /**
  * 二维点
@@ -202,6 +203,7 @@ struct stGenLine
 	bool Cross(stGenLine &stG) const;  ///<直线与直线相交
 	bool Cross(stSegLine &stS) const;  ///<直线与线段相交
 	double FromPoint(Point &pt) const; ///<直线与点的距离
+	double FromPoint(Pointd &pt) const;///<直线与点的距离
 
 	bool operator||(const stGenLine &stG) const; ///<两直线平行
 
