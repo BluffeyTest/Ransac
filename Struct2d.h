@@ -115,7 +115,7 @@ typedef struct Point2d
 }Pointd;
 
 //两点距离
-/*inline*/ double Distance(Point &pt1, Point &pt2);
+double Distance(Point &pt1, Point &pt2);
 double Distance(Point2d &pt1, Point2d &pt2);
 
 /**
@@ -179,6 +179,9 @@ struct stSegLine
 	double FromPoint(Point pt) const;  ///<线段到一个点的最短距离
 	double FromPoint(Point2d pt) const;  ///<线段到一个点的最短距离
 
+	double Angle() const;				///<线段的角度
+	double AngleFrom(stSegLine &stS)const;///<两条线段的夹角
+
 
 	friend std::ostream &operator<<(std::ostream &os, stSegLine &stS);
 };
@@ -204,6 +207,9 @@ struct stGenLine
 	bool Cross(stSegLine &stS) const;  ///<直线与线段相交
 	double FromPoint(Point &pt) const; ///<直线与点的距离
 	double FromPoint(Pointd &pt) const;///<直线与点的距离
+
+	double Angle() const;
+	double AngleFrom(stGenLine &stG) const;
 
 	bool operator||(const stGenLine &stG) const; ///<两直线平行
 

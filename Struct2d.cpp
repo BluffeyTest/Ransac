@@ -373,6 +373,27 @@ inline double stSegLine::Length() const
     return 0.0;
 }
 
+/**
+ * @brief 线段的倾斜角度
+ * 
+ * @return double 
+ */
+double stSegLine::Angle()
+{
+    return atan2(pt2.y-pt1.y,pt2.x-pt1.x);
+}
+
+/**
+ * @brief 两条线段之间的夹角
+ * 
+ * @param stS 这是另一条线段
+ * @return double 
+ */
+double AngleFrom(stSegLine &stS)
+{
+
+}
+
 /*inline*/ double Distance(Point &pt1, Point &pt2)
 {
     return sqrt(pow(pt1.x - pt2.x, 2) + pow(pt1.y - pt2.y, 2));
