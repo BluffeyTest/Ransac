@@ -20,11 +20,22 @@
 #include <cmath>
 
 /**
- * 二维点
+ * @brief 二维点
  * */
 struct Point2i;
 struct Point2f;
 struct Point2d;
+
+/**
+ * @brief 二维向量
+ * 将二维点重定义为二维向量是为了在某些地方不要将两个用混了，
+ * 但是在数学上两者又有同样的表现形式，所以就定义在一起了
+ * 
+ */
+typedef Point2i vec2i;
+typedef Point2f vec2f;
+typedef Point2d vec2d;
+typedef vec2d	vec;
 
 /**
  * @brief 圆、圆弧、直线、线段、椭圆、椭圆弧结构体
@@ -52,14 +63,15 @@ typedef struct Point2i
 	Point2i(float _x, float _y) : x((int)(_x + 0.5)), y((int)(_y + 0.5)) {}
 	Point2i(double _x, double _y) : x((int)(_x + 0.5)), y((int)(_y + 0.5)) {}
 
-	//Point2i(Point _p2):x(_p2.x),y(p2.y){}
-	//Point2i(Point2f _p2f) : x((int)(_p2f.x + 0.5)), y((int)(_p2f.y + 0.5)) {}
-	//Point2i(Point2d _p2d) : x((int)(_p2d.x + 0.5)), y((int)(_p2d.y + 0.5)) {}
+	double Angle() const;		///<向量与x轴的夹角
+	Point2i Rotate(double dAngle,const Point2i &pOri = Point2i(0,0)) const;///<向量或点绕中心点旋转
 
 	///< 备注，内敛函数总是不能如愿运行，故放弃内联
-	/*inline*/ Point2i operator+(const Point2i &pt) const;	///<两点相加
-	/*inline*/ Point2i operator-(const Point2i &pt) const;	///<两点相减
-	/*inline*/ bool operator==(const Point2i &pt) const;	///<判断两点是否相等
+	Point2i operator+(const Point2i &pt) const;	///<两点相加，同时也是两个向量相加
+	Point2i operator-(const Point2i &pt) const;	///<两点相减，~~
+	bool operator==(const Point2i &pt) const;	///<判断两点是否相等，~~
+
+	bool operator||(const Point2i &pt)const;	///<两个向量是否方向相同
 
 	friend std::ostream &operator<<(std::ostream &os, /*const*/ Point2i &pt);
 } Point;
@@ -160,13 +172,13 @@ struct stArc
 };
 
 /**
- * @brief 两点线段
- * 
+ * @brief 两点线段\n
+ * 起点和终点是有顺序的
  */
 struct stSegLine
 {
-	Point pt1;
-	Point pt2;
+	Point pt1;///<起点
+	Point pt2;///<终点
 
 	stSegLine() : pt1(Point(0, 0)), pt2(Point(0, 0)) {}
 	stSegLine(Point &p1, Point &p2) : pt1(p1), pt2(p2) {}
@@ -180,7 +192,7 @@ struct stSegLine
 	double FromPoint(Point2d pt) const;  ///<线段到一个点的最短距离
 
 	double Angle() const;				///<线段的角度
-	double AngleFrom(stSegLine &stS)const;///<两条线段的夹角
+	double AngleFrom(stSegLine &stS);	///<两条线段的夹角
 
 
 	friend std::ostream &operator<<(std::ostream &os, stSegLine &stS);
@@ -188,11 +200,11 @@ struct stSegLine
 
 /**
  * @brief 直线的标准方程
- * 
+ * $ ax+by+c=0$
  */
 struct stGenLine
 {
-	double a;
+	double a; 
 	double b;
 	double c;
 

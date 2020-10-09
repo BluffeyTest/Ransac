@@ -12,6 +12,24 @@
 
 using namespace std;
 
+
+double Point2i::Angle() const
+{
+    return atan2f((float)this->y,(float)this->x);
+}
+/**
+ * @brief 点进行旋转
+ * 
+ * @param dAngle 旋转角度，弧度制
+ * @param pOri 
+ * @return double 
+ */
+Point2i Point2i::Rotate(double dAngle,const Point2i &pOri) const
+{
+    return Point2i(pOri.x*cos(dAngle) - pOri.y*sin(dAngle) + 0.5,
+                pOri.x*sin(dAngle)+pOri.y*cos(dAngle) + 0.5
+    );
+}
 /**
  * @brief Point2i加法
  * 
@@ -87,7 +105,7 @@ ostream &operator<<(ostream &os, /*const*/ Point2i &pt)
  */
 /*inline*/ bool Point2f::operator==(const Point2f &pt) const
 {
-    const double eps = 1e-2;//float的精度只有六位，算上整数位，一般能有三维小数位是保证精度的就不错了
+    const double eps = 1e-3;//float的精度只有六位，算上整数位，一般能有三维小数位是保证精度的就不错了
     return (fabs(this->x - pt.x)<eps && fabs(this->y - pt.y)<eps );
 }
 
@@ -227,13 +245,19 @@ bool stCircle::Cross(stCircle &stC) const
     return false;
 }
 
-/*inline*/ double stCircle::FromLine(stGenLine &stG) const
+double stCircle::FromLine(stGenLine &stG) const
 {
     double dDistance = fabs(stG.a * this->ptCenter.x + stG.b * this->ptCenter.y + stG.c) / sqrt(pow(stG.a, 2) + pow(stG.b, 2));
     return dDistance;
 }
 
-/*inline*/ double stCircle::FromPoint(Point2d &pt) const
+/**
+ * @brief 圆心到点的距离
+ * 
+ * @param pt 
+ * @return double 
+ */
+double stCircle::FromPoint(Point2d &pt) const
 {
     return sqrt(pow(this->ptCenter.x - pt.x, 2) + pow(this->ptCenter.y - pt.y, 2));
 }
@@ -261,19 +285,59 @@ stGenLine::stGenLine(stSegLine &stS)
     this->c = (double)(p1.x * p2.y - p2.x * p1.y);
 }
 
+/**
+ * @brief 直线到点的距离
+ * 
+ * @param pt 点
+ * @return double 
+ */
 double stGenLine::FromPoint(Point &pt) const
 {
     double dDistance = fabs(this->a * pt.x + this->b * pt.y + this->c) / sqrt(pow(this->a, 2) + pow(this->b, 2));
     return dDistance;
 }
 
+/**
+ * @brief 直线到点的距离
+ * 
+ * @param pt 点
+ * @return double 
+ */
 double stGenLine::FromPoint(Pointd &pt) const
 {
     double dDistance = fabs(this->a * pt.x + this->b * pt.y + this->c) / sqrt(pow(this->a, 2) + pow(this->b, 2));
     return dDistance;
 }
 
-/*inline*/ bool stGenLine::operator||(const stGenLine &stG) const
+/**
+ * @brief 直线的角度
+ * 
+ * @return double 
+ */
+double stGenLine::Angle() const
+{
+    return atan2(a,-b);
+}
+
+/**
+ * @brief 两条直线之间的夹角
+ * 是有序的，参数里面属于后一条直线
+ * @param stG 
+ * @return double 
+ */
+double stGenLine::AngleFrom(stGenLine &stG) const
+{
+    return (atan2(stG.a,-stG.b) - atan2(a,-b));
+}
+
+/**
+ * @brief 两直线平行
+ * 
+ * @param stG 另一条直线
+ * @return true 
+ * @return false 
+ */
+bool stGenLine::operator||(const stGenLine &stG) const
 {
 
     double dScale = this->a / stG.a;
@@ -331,7 +395,13 @@ inline double stSegLine::Length() const
     ;
 }
 
-/*inline*/ double stSegLine::FromPoint(Point pt) const
+/**
+ * @brief 线段到点的距离
+ * 与直线到点的距离相比，线段到点的距离的最短值可能是魔偶一个端点到该点都的距离
+ * @param pt 点
+ * @return double 
+ */
+double stSegLine::FromPoint(Point pt) const
 {
     double r = ((pt.x - this->pt1.x) * (this->pt2.x - this->pt1.x) 
         + (pt.y - this->pt1.y) * (this->pt2.y - this->pt1.y)) / this->Length();
@@ -350,12 +420,12 @@ inline double stSegLine::Length() const
 }
 
 /**
- * @brief 
- * 
- * @param pt 
+ * @brief 线段到点的距离
+ * 与直线到点的距离相比，线段到点的距离的最短值可能是魔偶一个端点到该点都的距离
+ * @param pt 点
  * @return double 
  */
-/*inline*/ double stSegLine::FromPoint(Point2d pt) const
+double stSegLine::FromPoint(Point2d pt) const
 {
     double r = ((pt.x - this->pt1.x) * (this->pt2.x - this->pt1.x) 
         + (pt.y - this->pt1.y) * (this->pt2.y - this->pt1.y)) / this->Length();
@@ -376,9 +446,9 @@ inline double stSegLine::Length() const
 /**
  * @brief 线段的倾斜角度
  * 
- * @return double 
+ * @return double 角度，弧度制
  */
-double stSegLine::Angle()
+double stSegLine::Angle() const
 {
     return atan2(pt2.y-pt1.y,pt2.x-pt1.x);
 }
@@ -387,14 +457,14 @@ double stSegLine::Angle()
  * @brief 两条线段之间的夹角
  * 
  * @param stS 这是另一条线段
- * @return double 
+ * @return double 角度，弧度制
  */
-double AngleFrom(stSegLine &stS)
+double stSegLine::AngleFrom(stSegLine &stS) 
 {
-
+    return (stS.Angle() - this->Angle());
 }
 
-/*inline*/ double Distance(Point &pt1, Point &pt2)
+double Distance(Point &pt1, Point &pt2)
 {
     return sqrt(pow(pt1.x - pt2.x, 2) + pow(pt1.y - pt2.y, 2));
 }
