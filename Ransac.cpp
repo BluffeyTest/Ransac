@@ -281,6 +281,32 @@ bool Ransac::GetResultCircle(stCircle& stC)
     return m_bCircle;
 }
 
+/**
+ * @brief 取内点
+ * 
+ * @param[out] ptInners 
+ * @return true 
+ * @return false 
+ */
+bool Ransac::GetInnerPoints(std::vector<Point> &ptInners)
+{
+    bool bResult(false);
+    switch (m_Para.type)
+    {
+    case RansacPara::FIT_LINE:
+        bResult = GetInnerPointsLine(ptInners); break;
+    case RansacPara::FIT_LINES:
+        ; break;
+    case RansacPara::FIT_CIRCLE:
+        bResult = GetInnerPointsCircle(ptInners); break;
+    case RansacPara::FIT_CIRCLES:; break;
+    default:
+        break;
+    }
+
+    return bResult;
+}
+
 int Ransac::SumvUcharVctor(vector<unsigned char> &vec_s)
 {
     int sum(0);
@@ -376,3 +402,47 @@ int Ransac::InnnerCircleNums()
     return sum;
 }
 
+
+/**
+ * @brief 取直线拟合的内点
+ * 
+ * @param[out] ptInners 
+ * @return true 
+ * @return false 
+ */
+bool Ransac::GetInnerPointsLine(std::vector<Point> &ptInners)
+{
+    if (!m_bSegLine)return false;
+
+    for (size_t i = 0; i < m_vec_Points.size(); i++)
+    {
+        if (m_CurrentSegLine.FromPoint(m_vec_Points[i]) < m_Para.dInner)
+        {
+            ptInners.push_back(m_vec_Points[i]);
+        }
+    }
+
+    return true;
+}
+/**
+ * @brief 取圆拟合的内点
+ * 
+ * @param[out] ptInners 
+ * @return true 
+ * @return false 
+ */
+bool Ransac::GetInnerPointsCircle(std::vector<Point> &ptInners)
+{
+    if (!m_bCircle)return false;
+
+    ptInners.clear();
+    for (size_t i = 0; i < m_vec_Points.size(); i++)
+    {
+        double d = Distance(m_CurrentCircle.ptCenter, m_vec_Points[i]);//m_CurrentCircle.FromPoint(m_vec_Points[i]);
+        if (fabs(d - m_CurrentCircle.dR) < m_Para.dInner)
+        {
+            ptInners.push_back(m_vec_Points[i]);
+        }
+    }
+    return true;
+}
