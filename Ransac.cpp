@@ -288,7 +288,7 @@ bool Ransac::GetResultCircle(stCircle& stC)
  * @return true 
  * @return false 
  */
-bool Ransac::GetInnerPoints(std::vector<Point> &ptInners)
+bool Ransac::GetInnerPoints(std::vector<Pointd> &ptInners)
 {
     bool bResult(false);
     switch (m_Para.type)
@@ -410,7 +410,7 @@ int Ransac::InnnerCircleNums()
  * @return true 
  * @return false 
  */
-bool Ransac::GetInnerPointsLine(std::vector<Point> &ptInners)
+bool Ransac::GetInnerPointsLine(std::vector<Pointd> &ptInners)
 {
     if (!m_bSegLine)return false;
 
@@ -431,7 +431,7 @@ bool Ransac::GetInnerPointsLine(std::vector<Point> &ptInners)
  * @return true 
  * @return false 
  */
-bool Ransac::GetInnerPointsCircle(std::vector<Point> &ptInners)
+bool Ransac::GetInnerPointsCircle(std::vector<Pointd> &ptInners)
 {
     if (!m_bCircle)return false;
 

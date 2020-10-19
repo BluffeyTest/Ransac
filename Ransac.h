@@ -88,7 +88,7 @@ public:
 
 	bool GetResult();//这个写法不好，传出不单一
 	bool GetResultCircle(stCircle& stC);
-	bool GetInnerPoints(std::vector<Point> &ptInners);//得到内点
+	bool GetInnerPoints(std::vector<Pointd> &ptInners);//得到内点
 
 private:
 	bool FitSegLine();//拟合直线
@@ -103,8 +103,8 @@ private:
 	int InnnerCircleNums();//判断当前的模型的在内点距离内的点数
 
 	/// 获得内点
-	bool GetInnerPointsLine(std::vector<Point> &ptInners);
-	bool GetInnerPointsCircle(std::vector<Point> &ptInners);
+	bool GetInnerPointsLine(std::vector<Pointd> &ptInners);
+	bool GetInnerPointsCircle(std::vector<Pointd> &ptInners);
 };
 
 
