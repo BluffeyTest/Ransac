@@ -21,13 +21,13 @@ double Point2i::Angle() const
  * @brief 点进行旋转
  * 
  * @param dAngle 旋转角度，弧度制
- * @param pOri 
+ * @param pOri 原点
  * @return double 
  */
 Point2i Point2i::Rotate(double dAngle,const Point2i &pOri) const
 {
-    return Point2i(pOri.x*cos(dAngle) - pOri.y*sin(dAngle) + 0.5,
-                pOri.x*sin(dAngle)+pOri.y*cos(dAngle) + 0.5
+    return Point2i((x-pOri.x)*cos(dAngle) - (y-pOri.y)*sin(dAngle) + 0.5,
+                (x-pOri.x)*sin(dAngle)+(y-pOri.y)*cos(dAngle) + 0.5
     );
 }
 /**
@@ -63,14 +63,25 @@ Point2i Point2i::Rotate(double dAngle,const Point2i &pOri) const
     return (this->x == pt.x && this->y == pt.y);
 }
 
-/**
- * @brief 重载点的输出运算符
- * 
- */
-ostream &operator<<(ostream &os, /*const*/ Point2i &pt)
+
+
+double Point2f::Angle() const
 {
-    os<<"( "<<pt.x<<", "<<pt.y<<" )";
-    return os;
+    return atan2f(this->y,this->x);
+}
+
+/****************************************************************
+ * @brief 点进行旋转
+ * 
+ * @param dAngle 旋转角度，弧度制
+ * @param pOri 
+ * @return double 
+*****************************************************************/
+Point2f Point2f::Rotate(double dAngle,const Point2f &pOri) const
+{
+    return Point2f((x-pOri.x)*cos(dAngle) - (y-pOri.y)*sin(dAngle),
+                (x-pOri.x)*sin(dAngle)+(y-pOri.y)*cos(dAngle)
+    );
 }
 
 /**
@@ -107,6 +118,26 @@ ostream &operator<<(ostream &os, /*const*/ Point2i &pt)
 {
     const double eps = 1e-3;//float的精度只有六位，算上整数位，一般能有三维小数位是保证精度的就不错了
     return (fabs(this->x - pt.x)<eps && fabs(this->y - pt.y)<eps );
+}
+
+
+double Point2d::Angle() const
+{
+    return atan2(this->y,this->x);
+}
+
+/****************************************************************
+ * @brief 点进行旋转
+ * 
+ * @param dAngle 旋转角度，弧度制
+ * @param pOri 
+ * @return double 
+*****************************************************************/
+Point2d Point2d::Rotate(double dAngle,const Point2d &pOri) const
+{
+    return Point2d((x-pOri.x)*cos(dAngle) - (y-pOri.y)*sin(dAngle),
+                (x-pOri.x)*sin(dAngle)+(y-pOri.y)*cos(dAngle)
+    );
 }
 
 /**
@@ -472,6 +503,28 @@ double Distance(Point &pt1, Point &pt2)
 double Distance(Point2d &pt1, Point2d &pt2)
 {
     return sqrt(pow(pt1.x - pt2.x, 2) + pow(pt1.y - pt2.y, 2));
+}
+
+/**
+ * @brief 重载点的输出运算符
+ * 
+ */
+ostream &operator<<(ostream &os, /*const*/ Point2i &pt)
+{
+    os<<"( "<<pt.x<<", "<<pt.y<<" )";
+    return os;
+}
+
+ostream &operator<<(ostream &os, /*const*/ Point2f &pt)
+{
+    os<<"( "<<pt.x<<", "<<pt.y<<" )";
+    return os;
+}
+
+ostream &operator<<(ostream &os, /*const*/ Point2d &pt)
+{
+    os<<"( "<<pt.x<<", "<<pt.y<<" )";
+    return os;
 }
 
 ostream &operator<<(ostream &os, stCircle &stC)

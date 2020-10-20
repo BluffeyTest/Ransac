@@ -19,6 +19,9 @@
 #include <vector>
 #include <cmath>
 
+/// PI
+#define PI	3.1415926535897932384626433832795
+
 /**
  * @brief 二维点
  * */
@@ -94,10 +97,14 @@ typedef struct Point2f
 	Point2f(Point2i _p2i) : x((float)_p2i.x), y((float)_p2i.y) {}
 	//Point2f(Point2d _p2d) : x((float)_p2d.x), y((float)_p2d.y) {}
 
+	double Angle() const;		///<向量与x轴的夹角
+	Point2f Rotate(double dAngle,const Point2f &pOri = Point2f(0,0)) const;///<向量或点绕中心点旋转
+
 	/*inline*/ Point2f operator+(const Point2f &pt) const;
 	/*inline*/ Point2f operator-(const Point2f &pt) const;
 	/*inline*/ bool operator==(const Point2f &pt) const;
 
+	friend std::ostream & operator<<(std::ostream &os, /*const*/ Point2f &pt);
 
 }Pointf;
 
@@ -119,11 +126,15 @@ typedef struct Point2d
 	Point2d(Point2i _p2i) : x((double)_p2i.x), y((double)_p2i.y) {}
 	Point2d(Point2f _p2f) : x((double)_p2f.x), y((double)_p2f.y) {}
 
+	double Angle() const;		///<向量与x轴的夹角
+	Point2d Rotate(double dAngle,const Point2d &pOri = Point2d(0,0)) const;///<向量或点绕中心点旋转
+
+
 	/*inline*/ Point2d operator+(const Point2d &pt) const;
 	/*inline*/ Point2d operator-(const Point2d &pt) const;
 	/*inline*/ bool operator==(const Point2d &pt) const;
 
-	//friend ostream & operator<<(ostream &o, const Point2d &pt);
+	friend std::ostream & operator<<(std::ostream &os, /*const*/ Point2d &pt);
 }Pointd;
 
 //两点距离

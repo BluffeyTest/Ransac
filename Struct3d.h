@@ -12,6 +12,8 @@
 #pragma once
 #ifndef STRUCT3D_H
 #define STRUCT3D_H
+
+#include"Struct2d.h"
 /**
  * @brief 三维点
  * 
