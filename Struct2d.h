@@ -188,11 +188,11 @@ struct stArc
  */
 struct stSegLine
 {
-	Point pt1;///<起点
-	Point pt2;///<终点
+	Pointd pt1;///<起点
+	Pointd pt2;///<终点
 
-	stSegLine() : pt1(Point(0, 0)), pt2(Point(0, 0)) {}
-	stSegLine(Point &p1, Point &p2) : pt1(p1), pt2(p2) {}
+	stSegLine() : pt1(Pointd(0, 0)), pt2(Pointd(0, 0)) {}
+	stSegLine(Pointd &p1, Pointd &p2) : pt1(p1), pt2(p2) {}
 
 	bool operator==(stSegLine &stS) const;	///<两条线段是否相等
 
