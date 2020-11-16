@@ -17,19 +17,30 @@
 #ifndef STRUCT2D_HPP
 #define STRUCT2D_HPP
 
+/// 包含点的文件
 #include "Point.hpp"
 #include "Point2f.hpp"
 #include "Point2d.hpp"
+#include "vec.hpp"
+
+/// 包含直线和线段的文件
+#include "Line.hpp"
+#include "SegmentionLine.hpp"
+
+
+/// 包含圆和圆弧的文件
+#include "Circle.hpp"
+#include "Arc.hpp"
+
+/// 包含椭圆的两个版本的文件
+#include "Ellipse.hpp"
+#include "EllipseNormal.hpp"
 
 typedef Point2i Point;
 typedef Point2f Pointf;
 typedef Point2d Pointd;
 
-typedef Point2i vec2i;
-typedef Point2f vec2f;
-typedef Point2d vec2d;
 
-typedef vec2d vec;
 
 
 
