@@ -25,7 +25,7 @@
 
 /// 包含直线和线段的文件
 #include "Line.hpp"
-#include "SegmentionLine.hpp"
+#include "SegmentLine.hpp"
 
 
 /// 包含圆和圆弧的文件
