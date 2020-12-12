@@ -24,6 +24,7 @@
  * @brief 单精度浮点型二维点
  * 
  */
+typedef
 struct Point2f
 {
 	float x;
@@ -90,19 +91,20 @@ struct Point2f
      * @param pt 
      * @return bool 
      */
-    inline bool Point2f::operator==(const Point2f &pt) const
+    inline bool operator==(const Point2f &pt) const
     {
         const double eps = 1e-3;//float的精度只有六位，算上整数位，一般能有三维小数位是保证精度的就不错了
         return (fabs(this->x - pt.x)<eps && fabs(this->y - pt.y)<eps );
     }
 
-    friend std::ostream & operator<<(std::ostream &os, /*const*/ Point2f &pt);
+    friend std::ostream &operator<<(std::ostream &os, /*const*/ Point2f &pt)
     {
         os<<"( "<<pt.x<<", "<<pt.y<<" )";
         return os;
     }
-};
+}Pointf;
 
+typedef Point2f vec2f;
 
 
 

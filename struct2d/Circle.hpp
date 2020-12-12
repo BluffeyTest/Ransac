@@ -163,7 +163,7 @@ struct stCircle
         return false;
     }
 
-    friend std::ostream &operator<<(std::ostream &os, stCircle &stC);
+    friend std::ostream &operator<<(std::ostream &os, stCircle &stC)
     {
         os << "Circle: "
         << "Center = (" << stC.ptCenter.x << ", " << stC.ptCenter.y << "), R = " << stC.dR;

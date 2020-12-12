@@ -16,9 +16,8 @@
  * 
  */
 
-typedef Point2i vec2i;
-typedef Point2f vec2f;
-typedef Point2d vec2d;
-typedef vec2d	vec;
 
-#endeif //!VEC_HPP
+
+
+
+#endif //!VEC_HPP

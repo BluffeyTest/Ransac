@@ -33,6 +33,7 @@ struct Point2i;
  * @brief 整形二维点
  * 
  */
+typedef
 struct Point2i
 {
 	int x;
@@ -53,7 +54,7 @@ struct Point2i
      * @brief 向量与x轴的夹角
      * @return double 
      ******************************************************************************/
-    inline double Point2i::Angle() const
+    inline double Angle() const
     {
         return atan2f((float)this->y,(float)this->x);
     }
@@ -78,7 +79,7 @@ struct Point2i
      * @param pt 相加的点
      * @return Point2i 
      */
-    inline Point2i Point2i::operator+(const Point2i &pt) const
+    inline Point2i operator+(const Point2i &pt) const
     {
         return Point2i(this->x + pt.x, this->y + pt.y);
     }
@@ -89,7 +90,7 @@ struct Point2i
      * @param pt 
      * @return Point2i 
      */
-    inline Point2i Point2i::operator-(const Point2i &pt) const
+    inline Point2i operator-(const Point2i &pt) const
     {
         return Point2i(this->x - pt.x, this->y - pt.y);
     }
@@ -101,7 +102,7 @@ struct Point2i
      * @return false 不相等
      * @return true 相等
      */
-    inline bool Point2i::operator==(const Point2i &pt) const
+    inline bool operator==(const Point2i &pt) const
     {
         return (this->x == pt.x && this->y == pt.y);
     }
@@ -115,9 +116,9 @@ struct Point2i
         os<<"( "<<pt.x<<", "<<pt.y<<" )";
         return os;
     }
-};
+} Point;
 
-
+typedef Point2i vec2i;
 
 
 

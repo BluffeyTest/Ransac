@@ -4,6 +4,10 @@
 #ifndef SEGLINE_HPP
 #define SEGLINE_HPP
 
+#include"Line.hpp"
+using std::min;
+using std::max;
+
 /**
  * @brief 两点线段\n
  * 起点和终点是有顺序的
@@ -16,11 +20,9 @@ struct stSegLine
 	stSegLine() : pt1(Pointd(0, 0)), pt2(Pointd(0, 0)) {}
 	stSegLine(Pointd &p1, Pointd &p2) : pt1(p1), pt2(p2) {}
 
-	bool operator==(stSegLine &stS) const;	///<两条线段是否相等
-
 	friend std::ostream &operator<<(std::ostream &os, stSegLine &stS);
 
-	
+	///<两条线段是否相等
 	inline bool operator==(stSegLine &stS) const
 	{
 		if (this->pt1 == stS.pt1 && this->pt2 == stS.pt2)
@@ -60,12 +62,12 @@ struct stSegLine
 	 * 
 	 * @param stG 
 	 */
-	inline void GetGenLine(stGenLine &stG) const
-	{
-		stG.a = (double)(this->pt1.y - this->pt2.y);
-		stG.b = (double)(this->pt2.x - this->pt1.x);
-		stG.c = (double)(this->pt1.x * this->pt2.y - this->pt2.x * this->pt1.y);
-	}
+	// inline void GetGenLine(stGenLine &stG) const
+	// {
+	// 	stG.a = (double)(this->pt1.y - this->pt2.y);
+	// 	stG.b = (double)(this->pt2.x - this->pt1.x);
+	// 	stG.c = (double)(this->pt1.x * this->pt2.y - this->pt2.x * this->pt1.y);
+	// }
 
 	/**
 	 * @brief 线段长度
@@ -141,7 +143,7 @@ struct stSegLine
 	* @param stS 这是另一条线段
 	* @return double 角度，弧度制
 	*/
-	inline double stSegLine::AngleFrom(stSegLine &stS) 
+	inline double AngleFrom(stSegLine &stS) 
 	{
 		return (stS.Angle() - this->Angle());
 	}

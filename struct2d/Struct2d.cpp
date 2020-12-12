@@ -8,8 +8,8 @@
  * @copyright Copyright (c) 2020
  * 
  */
-#include "Struct2d.h"
 
+/*
 using namespace std;
 
 
@@ -23,3 +23,5 @@ double Distance(Point2d &pt1, Point2d &pt2)
 {
     return sqrt(pow(pt1.x - pt2.x, 2) + pow(pt1.y - pt2.y, 2));
 }
+
+*/

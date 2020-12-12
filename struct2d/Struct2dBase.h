@@ -1,10 +1,10 @@
 /**
  * @file Struct2d.h
  * @author Bluffey (Bluffey@163.com.com)
- * @brief ¶þÎ¬Æ½Ãæ½á¹¹Ìå
+ * @brief ï¿½ï¿½Î¬Æ½ï¿½ï¿½á¹¹ï¿½ï¿½
  * @version 0.1
  * @date 2020-08-18
- * @note inline µÄ³ÉÔ±º¯ÊýµÄÉúÃüºÍ¶¨ÒåÐèÒªÐ¶ÔØÍ¬Ò»¸öÎÄ¼þÀï£¬²»È»ÎÞ·¨Á´½Ó
+ * @note inline ï¿½Ä³ï¿½Ô±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¶ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÐ¶ï¿½ï¿½Í¬Ò»ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï£¬ï¿½ï¿½È»ï¿½Þ·ï¿½ï¿½ï¿½ï¿½ï¿½
  * 
  * @copyright Copyright (c) 2020
  * 
@@ -18,9 +18,7 @@
 
 
 
-//Á½µã¾àÀë
-double Distance(Point &pt1, Point &pt2);
-double Distance(Point2d &pt1, Point2d &pt2);
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 
 

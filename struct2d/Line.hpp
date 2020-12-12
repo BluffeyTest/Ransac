@@ -152,8 +152,7 @@ struct stGenLine
      ******************************************************************************/
     inline bool operator==(stSegLine &stS) const
     {
-        if (this->pt1 == stS.pt1 && this->pt2 == stS.pt2)
-            return true;
+        std::cout<<"don't suppurt now!"<<std::endl;
         return false;
     }
 

@@ -24,6 +24,7 @@
  * @brief 双精度浮点型二维点
  * 
  */
+typedef
 struct Point2d
 {
 	double x;
@@ -56,7 +57,7 @@ struct Point2d
      * @param pOri 旋转中心
      * @return double 
     *****************************************************************/
-    inline Point2d Rotate(double dAngle,const Point2d &pOri) const
+    inline Point2d Rotate(double dAngle,const Point2d &pOri = Point2d(0.0,0.0)) const
     {
         return Point2d((x-pOri.x)*cos(dAngle) - (y-pOri.y)*sin(dAngle),
                     (x-pOri.x)*sin(dAngle)+(y-pOri.y)*cos(dAngle)
@@ -92,20 +93,22 @@ struct Point2d
      * @param pt 
      * @return bool 
      */
-    inline bool Point2d::operator==(const Point2d &pt) const
+    inline bool operator==(const Point2d &pt) const
     {
         const double eps = 1e-6;//double的精度有15位，算上整数位，所以问题小一些
         return (fabs(this->x - pt.x)<eps && fabs(this->y - pt.y)<eps );
     }
 
-    ostream &operator<<(ostream &os, /*const*/ Point2d &pt)
+    friend std::ostream &operator<<(std::ostream &os, /*const*/ Point2d &pt)
     {
         os<<"( "<<pt.x<<", "<<pt.y<<" )";
         return os;
     }
-};
+} Pointd;
 
 
+typedef Point2d vec2d;
+typedef vec2d	vec;
 
 
 

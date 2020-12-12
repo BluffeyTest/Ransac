@@ -35,12 +35,21 @@
 /// 包含椭圆的两个版本的文件
 #include "Ellipse.hpp"
 #include "EllipseNormal.hpp"
-
+/*
 typedef Point2i Point;
 typedef Point2f Pointf;
 typedef Point2d Pointd;
+*/
 
+double Distance(Point &pt1, Point &pt2)
+{
+    return sqrt(pow(pt1.x - pt2.x, 2) + pow(pt1.y - pt2.y, 2));
+}
 
+double Distance(Point2d &pt1, Point2d &pt2)
+{
+    return sqrt(pow(pt1.x - pt2.x, 2) + pow(pt1.y - pt2.y, 2));
+}
 
 
 

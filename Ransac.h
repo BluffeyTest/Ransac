@@ -14,7 +14,7 @@
 #define RANSAC_H
 #include <ctime>
 
-#include"Struct2d.h"
+#include"./struct2d/Struct2d.hpp"
 
 /**
 *
@@ -22,7 +22,7 @@ what is .dump?
 */
 
 /**
- * Ransac ²ÎÊý.
+ * Ransac ï¿½ï¿½ï¿½ï¿½.
  */
 typedef struct stRansacPara
 {
@@ -33,13 +33,13 @@ typedef struct stRansacPara
 		FIT_CIRCLE = 2,
 		FIT_CIRCLES = 3,
 	};
-	emFitType type;//ÄâºÏÀàÐÍ
-	double dInner;//ÄÚµã¾àÀë
-	double dScale;//×îÐ¡ÄâºÏµãÊý±ÈÀý£¬ÈôÎª0£¬ÔòÈ¡×î´ó£¬·ñÔòÒ»°ãÈ¡ÖÁÉÙ0.5
-	int nIters;//×î´óµü´ú´ÎÊý
+	emFitType type;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	double dInner;//ï¿½Úµï¿½ï¿½ï¿½ï¿½
+	double dScale;//ï¿½ï¿½Ð¡ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª0ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ó£¬·ï¿½ï¿½ï¿½Ò»ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½0.5
+	int nIters;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-	double dMinR;//ÏÞÖÆ×îÐ¡Ö±¾¶
-	double dMaxR;//ÏÞÖÆ×î´óÖ±¾¶
+	double dMinR;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡Ö±ï¿½ï¿½
+	double dMaxR;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½
 
 	stRansacPara():type(FIT_LINE), dInner(2.0), dScale(0.9), nIters(50),dMinR(-1.0),dMaxR(-1.0){}
 	stRansacPara(emFitType t, double in, double s, int it):type(t), dInner(in), dScale(s), nIters(it) , dMinR(-1), dMaxR(-1){}
@@ -54,55 +54,55 @@ public:
 	~Ransac();
 
 private:
-	RansacPara m_Para;//²ÎÊý
+	RansacPara m_Para;//ï¿½ï¿½ï¿½ï¿½
 
-	std::vector<Point> m_vec_SrcPoints;///Ô­Ê¼µã¼¯
-	std::vector<Pointd> m_vec_Points;///Êµ¼Ê´¦Àí¹ý³Ìµ±ÖÐµÄµã¼¯
-	std::vector<unsigned char> m_vec_bMask;//´æ´¢¶ÔÓ¦µÄµãÊÇ²»ÊÇ·ûºÏµ±Ç°ÄâºÏµÄÄ£ÐÍ
-	std::vector<unsigned char> m_vec_bSampleMask;//´æ´¢¶ÔÓ¦µÄµãÊÇ²»ÊÇÒÑ¾­³äµ±¹ý²ÉÑùµã
+	std::vector<Point> m_vec_SrcPoints;///Ô­Ê¼ï¿½ã¼¯
+	std::vector<Pointd> m_vec_Points;///Êµï¿½Ê´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ï¿½ÐµÄµã¼¯
+	std::vector<unsigned char> m_vec_bMask;//ï¿½æ´¢ï¿½ï¿½Ó¦ï¿½Äµï¿½ï¿½Ç²ï¿½ï¿½Ç·ï¿½ï¿½Ïµï¿½Ç°ï¿½ï¿½Ïµï¿½Ä£ï¿½ï¿½
+	std::vector<unsigned char> m_vec_bSampleMask;//ï¿½æ´¢ï¿½ï¿½Ó¦ï¿½Äµï¿½ï¿½Ç²ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½äµ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 
-	std::vector<stCircle> m_vec_Circles;///¼ì²â³öÀ´µÄÔ²
-	std::vector<stGenLine> m_vec_SegLines;//¼ì²â³öÀ´µÄÏß¶Î
+	std::vector<stCircle> m_vec_Circles;///ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô²
+	std::vector<stGenLine> m_vec_SegLines;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¶ï¿½
 
-	stCircle m_Circle;//·µ»Øµ¥¸öÔ²
-	stGenLine m_SegLine;//·µ»ØµÄµ¥¸öÏß¶Î
+	stCircle m_Circle;//ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½Ô²
+	stGenLine m_SegLine;//ï¿½ï¿½ï¿½ØµÄµï¿½ï¿½ï¿½ï¿½ß¶ï¿½
 
-	stCircle m_CurrentCircle;//ÕýÔÚ¼ì²âµÄµ¥¸öÔ²
-	stGenLine m_CurrentSegLine;//ÕýÔÚ¼ì²âµÄµ¥¸öÏß¶Î
+	stCircle m_CurrentCircle;//ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½Äµï¿½ï¿½ï¿½Ô²
+	stGenLine m_CurrentSegLine;//ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ß¶ï¿½
 
-	bool m_bCircle;//Ô²¼ì²âÊÇ·ñ³É¹¦
-	bool m_bSegLine;//Ö±Ïß¼ì²âÊÇ·ñ³É¹¦
+	bool m_bCircle;//Ô²ï¿½ï¿½ï¿½ï¿½Ç·ï¿½É¹ï¿½
+	bool m_bSegLine;//Ö±ï¿½ß¼ï¿½ï¿½ï¿½Ç·ï¿½É¹ï¿½
 
-	//bool m_bVecCircle; //ÊÇ·ñ·µ»Ø¶à¸öÔ²
-	//bool m_bVecSegLine;//ÊÇ·ñ·µ»Ø¶à¸öÏß¶Î
+	//bool m_bVecCircle; //ï¿½Ç·ñ·µ»Ø¶ï¿½ï¿½Ô²
+	//bool m_bVecSegLine;//ï¿½Ç·ñ·µ»Ø¶ï¿½ï¿½ï¿½ß¶ï¿½
 
 public:
 
-	bool InputPoints(std::vector<Point> &vec_pts);//´«Èëµã¼¯
-	bool InputPara(RansacPara& stR);//´«Èë²ÎÊý
-	bool Run();//ÔËÐÐ
+	bool InputPoints(std::vector<Point> &vec_pts);//ï¿½ï¿½ï¿½ï¿½ã¼¯
+	bool InputPara(RansacPara& stR);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	bool Run();//ï¿½ï¿½ï¿½ï¿½
 	
 	
 	
 
-	bool GetResult();//Õâ¸öÐ´·¨²»ºÃ£¬´«³ö²»µ¥Ò»
+	bool GetResult();//ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»
 	bool GetResultCircle(stCircle& stC);
-	bool GetInnerPoints(std::vector<Pointd> &ptInners);//µÃµ½ÄÚµã
+	bool GetInnerPoints(std::vector<Pointd> &ptInners);//ï¿½Ãµï¿½ï¿½Úµï¿½
 
 private:
-	bool FitSegLine();//ÄâºÏÖ±Ïß
-	bool FitSegLines();//ÄâºÏ¶àÌõÖ±Ïß£»
-	bool FitCircle();//ÄâºÏÔ²£»
-	bool FitCircles();//ÄâºÏ¶à¸öÔ²
+	bool FitSegLine();//ï¿½ï¿½ï¿½Ö±ï¿½ï¿½
+	bool FitSegLines();//ï¿½ï¿½Ï¶ï¿½ï¿½ï¿½Ö±ï¿½ß£ï¿½
+	bool FitCircle();//ï¿½ï¿½ï¿½Ô²ï¿½ï¿½
+	bool FitCircles();//ï¿½ï¿½Ï¶ï¿½ï¿½Ô²
 
-	int SumvUcharVctor(std::vector<unsigned char> &vec_s);//¼ÆÊý£¬¸Ð¾õ¿ÉÒÔÓÅ»¯µÄÑù×Ó
+	int SumvUcharVctor(std::vector<unsigned char> &vec_s);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	bool RandIndex(int ndataLen, std::vector<int>& vec_Index);
-	int InnnerNums();//ÅÐ¶Ïµ±Ç°µÄÄ£ÐÍµÄÔÚÄÚµã¾àÀëÄÚµÄµãÊý
-	int InnnerLineNums();//ÅÐ¶Ïµ±Ç°µÄÄ£ÐÍµÄÔÚÄÚµã¾àÀëÄÚµÄµãÊý
-	int InnnerCircleNums();//ÅÐ¶Ïµ±Ç°µÄÄ£ÐÍµÄÔÚÄÚµã¾àÀëÄÚµÄµãÊý
+	int InnnerNums();//ï¿½Ð¶Ïµï¿½Ç°ï¿½ï¿½Ä£ï¿½Íµï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ÚµÄµï¿½ï¿½ï¿½
+	int InnnerLineNums();//ï¿½Ð¶Ïµï¿½Ç°ï¿½ï¿½Ä£ï¿½Íµï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ÚµÄµï¿½ï¿½ï¿½
+	int InnnerCircleNums();//ï¿½Ð¶Ïµï¿½Ç°ï¿½ï¿½Ä£ï¿½Íµï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ÚµÄµï¿½ï¿½ï¿½
 
-	/// »ñµÃÄÚµã
+	/// ï¿½ï¿½ï¿½ï¿½Úµï¿½
 	bool GetInnerPointsLine(std::vector<Pointd> &ptInners);
 	bool GetInnerPointsCircle(std::vector<Pointd> &ptInners);
 };

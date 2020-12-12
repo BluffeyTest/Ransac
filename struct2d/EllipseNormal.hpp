@@ -3,6 +3,10 @@
 #ifndef ELLIPSE_NORMAL_HPP
 #define ELLIPSE_NORMAL_HPP
 
+#include "Point2d.hpp"
+
+
+
 /**
  * @brief 椭圆的一般方程式ax^2+by^2+cxy+dx+ey = 0;
  * 二次型的表述：
