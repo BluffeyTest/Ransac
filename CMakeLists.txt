@@ -27,16 +27,49 @@ set(LIBRARY_OUTPUT_PATH ../lib)
 SET(CMAKE_PREFIX_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 add_library(Ransac ${STRUCT2D_SRC} ${STRUCT3D_SRC} Ransac.cpp)
+#add_library(Ransac SHARED ${STRUCT2D_SRC} ${STRUCT3D_SRC} Ransac.cpp)
 #add_executable(testRansac testRansac.cpp Ransac.cpp Struct2d.cpp Struct3d.cpp)
 add_executable(testRansac testRansac.cpp)
 target_link_libraries(testRansac Ransac)
 
 #设置这个库的输出名称为
 
+set(Ransac_HEADER_FILES
+  struct2d/Point.hpp
+  struct2d/Point2f.hpp
+  struct2d/Point2d.hpp
+  struct2d/Line.hpp
+  struct2d/SegmentLine.hpp
+  struct2d/Circle.hpp
+  struct2d/Arc.hpp
+  struct2d/Ellipse.hpp
+  struct2d/EllipseNormal.hpp
+  struct2d/Struct2d.hpp
+  struct3d/Struct3d.h
+)
+
+install(
+  FILES ${Ransac_HEADER_FILES}
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/Ransac
+)
 
 # 指定 Ransac 库的安装路径
-install(TARGETS Ransac DESTINATION bin)
-install(FILES Ransac.h Struct2d.h Struct3d.h DESTINATION include)
+#install(TARGETS Ransac DESTINATION bin)
+#install(FILES Ransac.h DESTINATION include/Ransac)
+#install(FILES S2D DESTINATION include/Ransac/struct2d/)
+#install(FILES struct3d/*.hpp DESTINATION include/Ransac/struct3d/)
+
 
 # 指定安装路径
-install(TARGETS Ransac DESTINATION lib)
+#install(TARGETS Ransac DESTINATION Racnsac/lib)
+
+
+install(TARGETS Ransac 
+        EXPORT RansacTargets
+        LIBRARY DESTINATION lib/Ransac
+        ARCHIVE DESTINATION lib/Ransac
+        RUNTIME DESTINATION bin/Ransac
+        PUBLIC_HEADER DESTINATION include/Ransac
+        )
+
+#install(FILES "struct2d/*.hpp" )
