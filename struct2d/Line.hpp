@@ -19,51 +19,46 @@
 #define LINE_HPP
 
 #include "Point.hpp"
-#include "Point2f.hpp"
-#include "Point2d.hpp"
+//#include "Point2f.hpp"
+//#include "Point2d.hpp"
 #include "SegmentLine.hpp"
 
-/**
- * @brief 直线的标准方程
- * $ ax+by+c=0$
- */
-struct stGenLine
-{
-	double a; 
-	double b;
-	double c;
 
-	stGenLine() : a(0.0), b(0.0), c(0.0) {}
-	stGenLine(double _a, double _b, double _c) : a(_a), b(_b), c(_c) {}
-	
+//template<class _Tp>
+class GenLine_
+{
+private:
+    /* data */
+public:
+    //初始化和销毁
+    GenLine_(): a(0.0), b(0.0), c(0.0) {}
+	GenLine_(double _a, double _b, double _c): a(_a), b(_b), c(_c) {}
+    ~GenLine_();
+
+    template<class _Tp>
+    GenLine_(_Tp &p1, _Tp &p2)
+    {
+        this->a = (double)(p1.y - p2.y);
+        this->b = (double)(p2.x - p1.x);
+        this->c = (double)(p1.x * p2.y - p2.x * p1.y);
+    }
+
+    template<class _Tp>
+    GenLine_(SegmentLine_<_Tp> &stS)
+    {
+        _Tp &p1 = stS.pt1;
+        _Tp &p2 = stS.pt2;
+        this->a = (double)(p1.y - p2.y);
+        this->b = (double)(p2.x - p1.x);
+        this->c = (double)(p1.x * p2.y - p2.x * p1.y);
+    }
+
     //TODO:
-	bool Cross(stGenLine &stG) const;  ///<直线与直线相交
-	bool Cross(stSegLine &stS) const;  ///<直线与线段相交
-	
+	bool Cross(GenLine_ &G) const;  ///<直线与直线相交
+    template<class _Tp>
+	bool Cross(SegmentLine_<_Tp> &SL) const;  ///<直线与线段相交
 
     
-    stGenLine(Point &p1, Point &p2)
-    {
-        this->a = (double)(p1.y - p2.y);
-        this->b = (double)(p2.x - p1.x);
-        this->c = (double)(p1.x * p2.y - p2.x * p1.y);
-    }
-
-    stGenLine(Pointd &p1, Pointd &p2)
-    {
-        this->a = (double)(p1.y - p2.y);
-        this->b = (double)(p2.x - p1.x);
-        this->c = (double)(p1.x * p2.y - p2.x * p1.y);
-    }
-
-    stGenLine(stSegLine &stS)
-    {
-        Pointd &p1 = stS.pt1;
-        Pointd &p2 = stS.pt2;
-        this->a = (double)(p1.y - p2.y);
-        this->b = (double)(p2.x - p1.x);
-        this->c = (double)(p1.x * p2.y - p2.x * p1.y);
-    }
 
     /**
      * @brief 直线到点的距离
@@ -71,19 +66,8 @@ struct stGenLine
      * @param pt 点
      * @return double 
      */
-    inline double FromPoint(Point &pt) const
-    {
-        double dDistance = fabs(this->a * pt.x + this->b * pt.y + this->c) / sqrt(pow(this->a, 2) + pow(this->b, 2));
-        return dDistance;
-    }
-
-    /**
-     * @brief 直线到点的距离
-     * 
-     * @param pt 点
-     * @return double 
-     */
-    inline double FromPoint(Pointd &pt) const
+    template<class _Tp>
+    inline double FromPoint(_Tp &pt) const
     {
         double dDistance = fabs(this->a * pt.x + this->b * pt.y + this->c) / sqrt(pow(this->a, 2) + pow(this->b, 2));
         return dDistance;
@@ -105,7 +89,7 @@ struct stGenLine
      * @param stG 
      * @return double 
      */
-    inline double AngleFrom(stGenLine &stG) const
+    inline double AngleFrom(GenLine_ &stG) const
     {
         return (atan2(stG.a,-stG.b) - atan2(a,-b));
     }
@@ -117,7 +101,7 @@ struct stGenLine
      * @return true 
      * @return false 
      */
-    inline bool operator||(const stGenLine &stG) const
+    inline bool operator||(const GenLine_ &stG) const
     {
 
         double dScale = this->a / stG.a;
@@ -133,7 +117,7 @@ struct stGenLine
      * @return true     相等
      * @return false    不相等
      ******************************************************************************/
-    inline bool operator==(const stGenLine &stG) const
+    inline bool operator==(const GenLine_ &stG) const
     {
         double dScale = this->a / stG.a;
         const double eps = 1e-6;
@@ -150,13 +134,14 @@ struct stGenLine
      * @return true 
      * @return false 
      ******************************************************************************/
-    inline bool operator==(stSegLine &stS) const
+    template<class _Tp>
+    inline bool operator==(SegmentLine_<_Tp> &stS) const
     {
         std::cout<<"don't suppurt now!"<<std::endl;
         return false;
     }
 
-    friend std::ostream &operator<<(std::ostream &os, stGenLine &stG)
+    friend std::ostream &operator<<(std::ostream &os, GenLine_ &stG)
     {
         os << "GenLine: " << stG.a << " * x ";
         stG.b < 0 ? os << stG.b : os << "+ " << stG.b;
@@ -166,7 +151,170 @@ struct stGenLine
         return os;
     }
 
+
+
+public:
+    double a;
+    double b;
+    double c;
 };
+
+typedef GenLine_ GenLine;
+
+//////////////////////////////////////////////////////////////////////////
+//             下面的都要逐渐转移上来，然后就不用了
+//////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+/**
+ * @brief 直线的标准方程
+ * $ ax+by+c=0$
+ */
+// struct stGenLine
+// {
+// 	double a; 
+// 	double b;
+// 	double c;
+
+// 	stGenLine() : a(0.0), b(0.0), c(0.0) {}
+// 	stGenLine(double _a, double _b, double _c) : a(_a), b(_b), c(_c) {}
+	
+//     //TODO:
+// 	bool Cross(stGenLine &stG) const;  ///<直线与直线相交
+// 	bool Cross(stSegLine &stS) const;  ///<直线与线段相交
+	
+
+    
+//     stGenLine(Point &p1, Point &p2)
+//     {
+//         this->a = (double)(p1.y - p2.y);
+//         this->b = (double)(p2.x - p1.x);
+//         this->c = (double)(p1.x * p2.y - p2.x * p1.y);
+//     }
+
+//     stGenLine(Pointd &p1, Pointd &p2)
+//     {
+//         this->a = (double)(p1.y - p2.y);
+//         this->b = (double)(p2.x - p1.x);
+//         this->c = (double)(p1.x * p2.y - p2.x * p1.y);
+//     }
+
+//     stGenLine(stSegLine &stS)
+//     {
+//         Pointd &p1 = stS.pt1;
+//         Pointd &p2 = stS.pt2;
+//         this->a = (double)(p1.y - p2.y);
+//         this->b = (double)(p2.x - p1.x);
+//         this->c = (double)(p1.x * p2.y - p2.x * p1.y);
+//     }
+
+//     /**
+//      * @brief 直线到点的距离
+//      * 
+//      * @param pt 点
+//      * @return double 
+//      */
+//     inline double FromPoint(Point &pt) const
+//     {
+//         double dDistance = fabs(this->a * pt.x + this->b * pt.y + this->c) / sqrt(pow(this->a, 2) + pow(this->b, 2));
+//         return dDistance;
+//     }
+
+//     /**
+//      * @brief 直线到点的距离
+//      * 
+//      * @param pt 点
+//      * @return double 
+//      */
+//     inline double FromPoint(Pointd &pt) const
+//     {
+//         double dDistance = fabs(this->a * pt.x + this->b * pt.y + this->c) / sqrt(pow(this->a, 2) + pow(this->b, 2));
+//         return dDistance;
+//     }
+
+//     /**
+//      * @brief 直线的角度
+//      * 
+//      * @return double 
+//      */
+//     inline double Angle() const
+//     {
+//         return atan2(a,-b);
+//     }
+
+//     /**
+//      * @brief 两条直线之间的夹角
+//      * 是有序的，参数里面属于后一条直线
+//      * @param stG 
+//      * @return double 
+//      */
+//     inline double AngleFrom(stGenLine &stG) const
+//     {
+//         return (atan2(stG.a,-stG.b) - atan2(a,-b));
+//     }
+
+//     /**
+//      * @brief 两直线平行
+//      * 
+//      * @param stG 另一条直线
+//      * @return true 
+//      * @return false 
+//      */
+//     inline bool operator||(const stGenLine &stG) const
+//     {
+
+//         double dScale = this->a / stG.a;
+//         const double eps = 1e-6;
+//         if (fabs(this->a - stG.a * dScale) < eps && fabs(this->b - stG.b * dScale) < eps)
+//             return true;
+//         return false;
+//     }
+
+//     /******************************************************************************
+//      * @brief 判断两直线是否相等
+//      * @param[in]  stG              另一条直线
+//      * @return true     相等
+//      * @return false    不相等
+//      ******************************************************************************/
+//     inline bool operator==(const stGenLine &stG) const
+//     {
+//         double dScale = this->a / stG.a;
+//         const double eps = 1e-6;
+//         if (fabs(this->a - stG.a * dScale) < eps && fabs(this->b - stG.b * dScale) < eps 
+//             && fabs(this->c - stG.c * dScale) < eps)
+//             return true;
+//         return false;
+//     }
+
+
+//     /******************************************************************************
+//      * @brief 判断直线和线段是否属于同一条直线。
+//      * @param[in]  stS              线段
+//      * @return true 
+//      * @return false 
+//      ******************************************************************************/
+//     inline bool operator==(stSegLine &stS) const
+//     {
+//         std::cout<<"don't suppurt now!"<<std::endl;
+//         return false;
+//     }
+
+//     friend std::ostream &operator<<(std::ostream &os, stGenLine &stG)
+//     {
+//         os << "GenLine: " << stG.a << " * x ";
+//         stG.b < 0 ? os << stG.b : os << "+ " << stG.b;
+//         os << " * y ";
+//         stG.c < 0 ? os << stG.c : os << "+ " << stG.c;
+//         os << " = 0.0";
+//         return os;
+//     }
+
+// };
 
 
 

@@ -1,9 +1,9 @@
 /**
  * @file Ransac.cpp
  * @author Bluffey (Bluffey@163.com)
- * @brief Ê¹ÓÃRansacÄâºÏ¶þÎ¬Í¼ÐÎ
- * @note ºóÐø¿ÉÄÜ»áÌí¼ÓÈýÎ»Æ½Ãæ£¬ÈýÎ¬Çò£¬ÈýÎ¬ÍÖÇò£¬ÒÔ¼°¶þÎ¬ÍÖÔ²µÄÄâºÏ
- *      ¿ÉÄÜ»á´ó¸ü£¬Ôö¼ÓÃüÃû¿Õ¼ä£¬»òÕß²»ÔÙÊ¹ÓÃÀà½øÐÐ±àÐ´¡£
+ * @brief Ê¹ï¿½ï¿½Ransacï¿½ï¿½Ï¶ï¿½Î¬Í¼ï¿½ï¿½
+ * @note ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»Æ½ï¿½æ£¬ï¿½ï¿½Î¬ï¿½ï¿½ï¿½ï¿½Î¬ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½Î¬ï¿½ï¿½Ô²ï¿½ï¿½ï¿½ï¿½ï¿½
+ *      ï¿½ï¿½ï¿½Ü»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ä£¬ï¿½ï¿½ï¿½ß²ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½Ð´ï¿½ï¿½
  * @version 0.1
  * @date 2020-08-20
  * 
@@ -26,21 +26,21 @@ Ransac::~Ransac()
 }
 
 /**
- * ÊäÈëÐèÒªµÄµã.
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Äµï¿½.
  * 
  * @param vec_pts
  * @return 
  */
 bool Ransac::InputPoints(std::vector<Point>& vec_pts)
 {
-    if (vec_pts.empty()) return false;//¼ì²é
+    if (vec_pts.empty()) return false;//ï¿½ï¿½ï¿½
 
-    //Çå¿Õ·À¸ÉÈÅ
+    //ï¿½ï¿½Õ·ï¿½ï¿½ï¿½ï¿½ï¿½
     m_vec_SrcPoints.clear();
     m_vec_Points.clear();
     m_vec_bMask.clear();
 
-    //¸³Öµ
+    //ï¿½ï¿½Öµ
     m_vec_SrcPoints.assign(vec_pts.begin(), vec_pts.end() - 1);
     m_vec_Points.assign(vec_pts.begin(), vec_pts.end() - 1);
     for (size_t i = 0; i < m_vec_SrcPoints.size(); i++)
@@ -52,7 +52,7 @@ bool Ransac::InputPoints(std::vector<Point>& vec_pts)
 }
 
 /**
- * @brief ÊäÈë²ÎÊý
+ * @brief ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  * 
  * @param stR 
  * @return true 
@@ -66,7 +66,7 @@ bool Ransac::InputPara(RansacPara& stR)
 
 
 /**
- * @brief ÔËÐÐÄâºÏ
+ * @brief ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  * 
  * @return true 
  * @return false 
@@ -89,10 +89,10 @@ bool Ransac::Run()
 }
 
 /**
- * @brief ÄâºÏÏß
+ * @brief ï¿½ï¿½ï¿½ï¿½ï¿½
  * 
- * @return true ÄâºÏ³É¹¦
- * @return false ÄâºÏÊ§°Ü
+ * @return true ï¿½ï¿½Ï³É¹ï¿½
+ * @return false ï¿½ï¿½ï¿½Ê§ï¿½ï¿½
  */
 bool Ransac::FitSegLine()
 {
@@ -101,17 +101,17 @@ bool Ransac::FitSegLine()
     vector<int> vec_index;
     for(size_t i = 0;i<m_Para.nIters;i++)
     {
-        //Ëæ»úÈ¡µã
+        //ï¿½ï¿½ï¿½È¡ï¿½ï¿½
         if (SumvUcharVctor(m_vec_bSampleMask) != nSampleLen)
         {
             RandIndex(nSampleLen, vec_index);
         }
         else break;
        
-        //È¡µÃµ±Ç°Ö±Ïß
-        m_CurrentSegLine = stGenLine(m_vec_Points[vec_index[0]], m_vec_Points[vec_index[1]]);
+        //È¡ï¿½Ãµï¿½Ç°Ö±ï¿½ï¿½
+        m_CurrentSegLine = GenLine(m_vec_Points[vec_index[0]], m_vec_Points[vec_index[1]]);
 
-        //ÅÐ¶Ïµ±Ç°Ö±ÏßµÄÄÚµãÊýÁ¿£¬²¢¸üÐÂÄ£ÐÍ
+        //ï¿½Ð¶Ïµï¿½Ç°Ö±ï¿½ßµï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½
         int nCurentInners = InnnerNums();
         if(nInners < nCurentInners)
         { 
@@ -122,18 +122,18 @@ bool Ransac::FitSegLine()
 
     }
 
-    //ÅÐ¶ÏÊÇ·ñÓÐÄ£ÐÍ
+    //ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ä£ï¿½ï¿½
     double dScale = (double)nInners / nSampleLen;
     if (m_Para.dScale < 1e-5)
     {
-        //½«×îºÃµÄÄ£ÐÍÄÃÀ´×ö×îÐ¡¶þ³Ë
-        //ÔÝÊ±Ö±½ÓÈÓ³öÈ¥
+        //ï¿½ï¿½ï¿½ï¿½Ãµï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½
+        //ï¿½ï¿½Ê±Ö±ï¿½ï¿½ï¿½Ó³ï¿½È¥
 
 		return true;
     }
     else if (dScale < m_Para.dScale )
     {
-        m_SegLine = stGenLine(0.,0.,0.);
+        m_SegLine = GenLine(0.,0.,0.);
         return false;
     }
 
@@ -142,8 +142,8 @@ bool Ransac::FitSegLine()
 
 
 /**
- * @brief ÄâºÏ¶àÌõÖ±Ïß£¬Éæ¼°µ½ÌÞ³ýÒÑ¾­ÄâºÏµÄÖ±ÏßµÄµãÎÊÌâ£¬ºÍÒÑ¾­ÄâºÏµÄ½á¹û·µ»ØµÄÎÊÌâ
- * @note ÔÝÊ±²»Ìí¼Ó£¬ÖªµÀÓÐÐèÒªµÄÊ±ºò
+ * @brief ï¿½ï¿½Ï¶ï¿½ï¿½ï¿½Ö±ï¿½ß£ï¿½ï¿½æ¼°ï¿½ï¿½ï¿½Þ³ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½Ïµï¿½Ö±ï¿½ßµÄµï¿½ï¿½ï¿½ï¿½â£¬ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ÏµÄ½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½
+ * @note ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ó£ï¿½Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ê±ï¿½ï¿½
  * @return true 
  * @return false 
  */
@@ -153,10 +153,10 @@ bool Ransac::FitSegLines()
 }
 
 /**
- * @brief ÄâºÏÔ²
+ * @brief ï¿½ï¿½ï¿½Ô²
  * 
- * @return true ÄâºÏ³É¹¦
- * @return false ÄâºÏÊ§°Ü
+ * @return true ï¿½ï¿½Ï³É¹ï¿½
+ * @return false ï¿½ï¿½ï¿½Ê§ï¿½ï¿½
  */
 bool Ransac::FitCircle()
 {
@@ -165,46 +165,46 @@ bool Ransac::FitCircle()
     vector<int> vec_index;
     for(size_t i = 0;i<m_Para.nIters;i++)
     {
-        //Ëæ»úÈ¡µã
+        //ï¿½ï¿½ï¿½È¡ï¿½ï¿½
         if (SumvUcharVctor(m_vec_bSampleMask) != nSampleLen)
         {
             RandIndex(nSampleLen, vec_index);
         }
         else break;
        
-        //È¡µÃµ±Ç°Ô²
+        //È¡ï¿½Ãµï¿½Ç°Ô²
         m_CurrentCircle = stCircle(m_vec_Points[vec_index[0]], m_vec_Points[vec_index[1]], m_vec_Points[vec_index[2]]);
 
-        //ÅÐ¶Ïµ±Ç°Ô²µÄÄÚµãÊýÁ¿
+        //ï¿½Ð¶Ïµï¿½Ç°Ô²ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½
         int nCurentInners = InnnerNums();
         if(nInners < nCurentInners)
         { 
-            if (m_Para.dMaxR < 0.0 && m_Para.dMinR < 0.0)//²»¼ì²é°ë¾¶
+            if (m_Para.dMaxR < 0.0 && m_Para.dMinR < 0.0)//ï¿½ï¿½ï¿½ï¿½ï¿½ë¾¶
             {
                 nInners = nCurentInners;
                 m_Circle = m_CurrentCircle;
             }
             else if (m_Para.dMaxR > 0.0 && m_Para.dMinR > 0.0
-                && (m_CurrentCircle.dR < m_Para.dMaxR && m_CurrentCircle.dR > m_Para.dMinR))//Á½¸ö°ë¾¶µÄ´óÐ¡¶¼¼ì²é,»¹¿ÉÒÔ¸Ä³ÉÖ»¼ì²é×î´ó»òÕß×îÐ¡
+                && (m_CurrentCircle.dR < m_Para.dMaxR && m_CurrentCircle.dR > m_Para.dMinR))//ï¿½ï¿½ï¿½ï¿½ï¿½ë¾¶ï¿½Ä´ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Ô¸Ä³ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡
             {
                 nInners = nCurentInners;
                 m_Circle = m_CurrentCircle;
             }
             else if (m_Para.dMaxR < 0.0 && m_Para.dMinR > 0.0
-                && m_CurrentCircle.dR > m_Para.dMinR)//Öµ¼ì²é×îÐ¡°ë¾¶ÇÒÍ¨¹ý
+                && m_CurrentCircle.dR > m_Para.dMinR)//Öµï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ë¾¶ï¿½ï¿½Í¨ï¿½ï¿½
             {
                 nInners = nCurentInners;
                 m_Circle = m_CurrentCircle;
             }
             else if (m_Para.dMaxR > 0.0 && m_Para.dMinR < 0.0
-                && m_CurrentCircle.dR < m_Para.dMinR)//Ö»¼ì²é×î´ó°ë¾¶£¬ÇÒÍ¨¹ý
+                && m_CurrentCircle.dR < m_Para.dMinR)//Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë¾¶ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½
             {
                 nInners = nCurentInners;
                 m_Circle = m_CurrentCircle;
             }
             else
             {
-                //²»¸üÐÂ
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             }
             
         }
@@ -212,12 +212,12 @@ bool Ransac::FitCircle()
 
     }
 
-    //ÅÐ¶ÏÊÇ·ñÓÐÄ£ÐÍ
+    //ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ä£ï¿½ï¿½
     double dScale = (double)nInners / nSampleLen;
     if (m_Para.dScale < 1e-5)
     {
-        //½«×îºÃµÄÄ£ÐÍÄÃÀ´×ö×îÐ¡¶þ³Ë
-        //ÔÝÊ±Ö±½ÓÈÓ³öÈ¥
+        //ï¿½ï¿½ï¿½ï¿½Ãµï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½
+        //ï¿½ï¿½Ê±Ö±ï¿½ï¿½ï¿½Ó³ï¿½È¥
 
 		if (m_Para.dMaxR > 0.0 && m_Para.dMinR > 0.0
 			&& (m_Circle.dR> m_Para.dMaxR || m_Circle.dR < m_Para.dMinR)
@@ -240,8 +240,8 @@ bool Ransac::FitCircle()
 }
 
 /**
- * @brief ÄâºÏ¶à¸öÔ²
- * @note ÔÝÊ±²»Ìí¼Ó£¬Ö±µ½ÓÐÐèÒªµÄÊ±ºò
+ * @brief ï¿½ï¿½Ï¶ï¿½ï¿½Ô²
+ * @note ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ó£ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ê±ï¿½ï¿½
  * @return true 
  * @return false 
  */
@@ -251,7 +251,7 @@ bool Ransac::FitCircles()
 }
 
 /**
- * @brief »ñÈ¡½á¹û£¬ÉÐÎ´ÓÐ½ÏºÃµÄ·µ»Ø·½Ê½
+ * @brief ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î´ï¿½Ð½ÏºÃµÄ·ï¿½ï¿½Ø·ï¿½Ê½
  * 
  * @return true 
  * @return false 
@@ -262,9 +262,9 @@ bool Ransac::GetResult()
 }
 
 /**
- * @brief ·µ»ØÔ²µÄ½á¹û
+ * @brief ï¿½ï¿½ï¿½ï¿½Ô²ï¿½Ä½ï¿½ï¿½
  * 
- * @param[out] stC ·µ»ØµÄÔ²
+ * @param[out] stC ï¿½ï¿½ï¿½Øµï¿½Ô²
  * @return true 
  * @return false 
  */
@@ -282,7 +282,7 @@ bool Ransac::GetResultCircle(stCircle& stC)
 }
 
 /**
- * @brief È¡ÄÚµã
+ * @brief È¡ï¿½Úµï¿½
  * 
  * @param[out] ptInners 
  * @return true 
@@ -335,7 +335,7 @@ bool Ransac::RandIndex(int ndataLen, vector<int> &vec_Index)
     for (int i = 0; i < nNums; i++)
     {
 		nIndex = rand() % ndataLen;
-        int nLimit(0);//·ÀÖ¹ËÀÑ­»·
+        int nLimit(0);//ï¿½ï¿½Ö¹ï¿½ï¿½Ñ­ï¿½ï¿½
 		while (nLimit <50 &&
             nIndex!= -1 
             && m_vec_bSampleMask[nIndex] != 0)
@@ -354,7 +354,7 @@ int Ransac::InnnerNums()
 {
     switch (m_Para.type)
     {
-    case RansacPara::FIT_LINE:return InnnerLineNums(); break;//breakÊÇÔ¤·ÀÐÞ¸ÄµÄ
+    case RansacPara::FIT_LINE:return InnnerLineNums(); break;//breakï¿½ï¿½Ô¤ï¿½ï¿½ï¿½Þ¸Äµï¿½
     case RansacPara::FIT_LINES:; break;
     case RansacPara::FIT_CIRCLE:return InnnerCircleNums(); break;
     case RansacPara::FIT_CIRCLES:; break;
@@ -366,7 +366,7 @@ int Ransac::InnnerNums()
 
 
 /**
- * @brief ¼ÆËãÖ±ÏßµÄÄÚµãÊýÁ¿
+ * @brief ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ßµï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½
  * 
  * @return int 
  */
@@ -384,7 +384,7 @@ int Ransac::InnnerLineNums()
 }
 
 /**
- * @brief ¼ÆËãÔ²µÄÄÚµãÊýÁ¿
+ * @brief ï¿½ï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½
  * 
  * @return int 
  */
@@ -404,7 +404,7 @@ int Ransac::InnnerCircleNums()
 
 
 /**
- * @brief È¡Ö±ÏßÄâºÏµÄÄÚµã
+ * @brief È¡Ö±ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½Úµï¿½
  * 
  * @param[out] ptInners 
  * @return true 
@@ -425,7 +425,7 @@ bool Ransac::GetInnerPointsLine(std::vector<Pointd> &ptInners)
     return true;
 }
 /**
- * @brief È¡Ô²ÄâºÏµÄÄÚµã
+ * @brief È¡Ô²ï¿½ï¿½Ïµï¿½ï¿½Úµï¿½
  * 
  * @param[out] ptInners 
  * @return true 

@@ -4,6 +4,13 @@ set(CMAKE_CXX_FLAGS "-std=c++11")
 
 project(Ransac VERSION 1.1.0)
 
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+
+# Add local path for finding packages, set the local version first
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake_modules")
+
 #
 add_subdirectory(./struct2d)
 add_subdirectory(./struct3d)
@@ -36,8 +43,8 @@ target_link_libraries(testRansac Ransac)
 
 set(Ransac_HEADER_FILES
   struct2d/Point.hpp
-  struct2d/Point2f.hpp
-  struct2d/Point2d.hpp
+  #struct2d/Point2f.hpp
+  #struct2d/Point2d.hpp
   struct2d/Line.hpp
   struct2d/SegmentLine.hpp
   struct2d/Circle.hpp
@@ -46,12 +53,15 @@ set(Ransac_HEADER_FILES
   struct2d/EllipseNormal.hpp
   struct2d/Struct2d.hpp
   struct3d/Struct3d.h
+  Ransac.h
 )
 
 install(
   FILES ${Ransac_HEADER_FILES}
-  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/Ransac
+  DESTINATION include/Ransac
 )
+
+message("include dir is:${CMAKE_INSTALL_INCLUDEDIR}")
 
 # 指定 Ransac 库的安装路径
 #install(TARGETS Ransac DESTINATION bin)
@@ -64,12 +74,12 @@ install(
 #install(TARGETS Ransac DESTINATION Racnsac/lib)
 
 
-install(TARGETS Ransac 
-        EXPORT RansacTargets
-        LIBRARY DESTINATION lib/Ransac
-        ARCHIVE DESTINATION lib/Ransac
-        RUNTIME DESTINATION bin/Ransac
-        PUBLIC_HEADER DESTINATION include/Ransac
-        )
+# install(TARGETS Ransac 
+#         EXPORT RansacTargets
+#         LIBRARY DESTINATION lib/Ransac
+#         ARCHIVE DESTINATION lib/Ransac
+#         RUNTIME DESTINATION bin/Ransac
+#         PUBLIC_HEADER DESTINATION include/Ransac
+#         )
 
 #install(FILES "struct2d/*.hpp" )

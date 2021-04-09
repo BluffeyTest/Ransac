@@ -19,9 +19,9 @@
 
 /// 包含点的文件
 #include "Point.hpp"
-#include "Point2f.hpp"
-#include "Point2d.hpp"
-#include "vec.hpp"
+//#include "Point2f.hpp"
+//#include "Point2d.hpp"
+//#include "vec.hpp"
 
 /// 包含直线和线段的文件
 #include "Line.hpp"
@@ -41,12 +41,12 @@ typedef Point2f Pointf;
 typedef Point2d Pointd;
 */
 
-double Distance(Point &pt1, Point &pt2)
+inline double Distance(Point &pt1, Point &pt2)
 {
     return sqrt(pow(pt1.x - pt2.x, 2) + pow(pt1.y - pt2.y, 2));
 }
 
-double Distance(Point2d &pt1, Point2d &pt2)
+inline double Distance(Point2d &pt1, Point2d &pt2)
 {
     return sqrt(pow(pt1.x - pt2.x, 2) + pow(pt1.y - pt2.y, 2));
 }

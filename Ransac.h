@@ -63,13 +63,13 @@ private:
 
 
 	std::vector<stCircle> m_vec_Circles;///��������Բ
-	std::vector<stGenLine> m_vec_SegLines;//���������߶�
+	std::vector<GenLine> m_vec_SegLines;//���������߶�
 
 	stCircle m_Circle;//���ص���Բ
-	stGenLine m_SegLine;//���صĵ����߶�
+	GenLine m_SegLine;//���صĵ����߶�
 
 	stCircle m_CurrentCircle;//���ڼ��ĵ���Բ
-	stGenLine m_CurrentSegLine;//���ڼ��ĵ����߶�
+	GenLine m_CurrentSegLine;//���ڼ��ĵ����߶�
 
 	bool m_bCircle;//Բ����Ƿ�ɹ�
 	bool m_bSegLine;//ֱ�߼���Ƿ�ɹ�

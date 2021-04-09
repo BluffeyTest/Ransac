@@ -13,7 +13,7 @@
 #ifndef STRUCT3D_H
 #define STRUCT3D_H
 
-#include"Struct2d.h"
+#include"../struct2d/Struct2d.hpp"
 /**
  * @brief 三维点
  * 

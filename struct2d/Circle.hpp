@@ -95,7 +95,7 @@ struct stCircle
     }
 
     //圆与直线相交
-    inline bool Cross(stGenLine &stG) const
+    inline bool Cross(GenLine &stG) const
     {
         double dDistance = this->FromLine(stG); //stG.FromPoint(this->ptCenter);
         if (this->dR < dDistance)
@@ -111,9 +111,9 @@ struct stCircle
      * @return true     相交
      * @return false    不相交
      ******************************************************************************/
-    inline bool Cross(stSegLine &stS) const
+    inline bool Cross(SegLine2f &stS) const
     {
-        stGenLine stG = stGenLine(stS);
+        SegLine2f stG = SegLine2f(stS);
         double d1 = sqrt(pow(stS.pt1.x - this->ptCenter.x, 2) + pow(stS.pt1.y - this->ptCenter.y, 2)); ///<线段第一个点到圆心的距离
         double d2 = sqrt(pow(stS.pt2.x - this->ptCenter.x, 2) + pow(stS.pt2.y - this->ptCenter.y, 2)); ///<线段第二个点到圆心的距离
         //double d3 = this->FromLine(stG);///<圆心到直线的距离
@@ -132,7 +132,7 @@ struct stCircle
      * @param  stG              My Param doc
      * @return double 
      ******************************************************************************/
-    double FromLine(stGenLine &stG) const
+    double FromLine(GenLine &stG) const
     {
         double dDistance = fabs(stG.a * this->ptCenter.x + stG.b * this->ptCenter.y + stG.c) / sqrt(pow(stG.a, 2) + pow(stG.b, 2));
         return dDistance;
