@@ -118,7 +118,8 @@ public:
 	 *****************************************************************************/
 	inline double clockwiseNormalAngle()const
 	{
-		return (pt2 - pt1).Rotate(PI/2).Angle();
+		//return (pt2 - pt1).Rotate(PI/2).Angle();
+		return (pt2-pt1).clockwiseNormalAngle();
 	}
 
 	/*****************************************************************************
@@ -128,7 +129,8 @@ public:
 	 *****************************************************************************/
 	inline double unClockwiseNormalAngle()const
 	{
-		return (pt2 - pt1).Rotate(-PI/2).Angle();
+		//return (pt2 - pt1).Rotate(-PI/2).Angle();
+		return (pt2-pt1).unclockwiseNormalAngle();
 	}
 
 	//输出

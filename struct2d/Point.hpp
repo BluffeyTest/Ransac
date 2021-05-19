@@ -49,7 +49,7 @@ public:
         return Point_<_T2>(_T2(x), _T2(y));//这儿要留意
     }
 
-   bool operator||(const Point_<_T> &pt)const;	///<两个向量是否方向相同
+    bool operator||(const Point_<_T> &pt)const;	///<两个向量是否方向相同
 
     /******************************************************************************
      * @brief 向量与x轴的夹角
@@ -60,6 +60,27 @@ public:
         return atan2f((float)this->y,(float)this->x);
     }
     
+    /*****************************************************************************
+     * @brief after unclockwise the vector PI/2, get the angle use as Normal's Angle
+     * the new y is the old x, the new x is the old -y 
+     * @return double 
+     *****************************************************************************/
+    inline double unclockwiseNormalAngle() const
+    {
+        return atan2(x,-y);
+    } 
+
+    /*****************************************************************************
+     * @brief 
+     * the new y is the old -x, the new x is the old y
+     * @return double 
+     *****************************************************************************/
+    inline double clockwiseNormalAngle() const
+    {
+        return atan2(-x,y);
+    } 
+
+
     /*****************************************************************************
      * @brief 当以当前向量为起始向量，计算两向量的夹角
      * @param v2 
