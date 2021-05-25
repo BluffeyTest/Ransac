@@ -56,6 +56,8 @@ public:
 		return (u * v <= 1e-8 && w * z <= 1e-8);
 	}
 
+
+
 	/**
 	 * @brief 线段长度
 	 * 
@@ -131,6 +133,37 @@ public:
 	{
 		//return (pt2 - pt1).Rotate(-PI/2).Angle();
 		return (pt2-pt1).unclockwiseNormalAngle();
+	}
+
+	/*****************************************************************************
+	 * @brief 求解两个线段所在直线的交点的函数
+	 * 求解的方式是转换成点向式求解
+	 * $pt = p_1 + a_1 * v_1 = p_2 + a_2 * v_2$
+	 * $==> p_1 - p_2 + a_1*v_1-a_2*v_2 = 0$
+	 * $==>
+	 * 
+	 * 
+	 * @param {type} stS 
+	 * @param {type} pt 
+	 * @return true 相交且解算出来了
+	 * @return false 不相交或者未解算出来 
+	 *****************************************************************************/
+	inline bool crossPoint(SegmentLine_<_Tp> &stS,_Tp &pt)
+	{
+		
+		if (Cross(stS))
+		{
+			//TODO:
+			auto s1 = (stS.pt1 - pt1).cross(stS.pt2 - pt1);
+			auto s2 = (stS.pt2 - pt2).cross(stS.pt1 - pt2);
+			pt = pt1+(pt2-pt1)*s1/(s1+s2);
+
+		}
+		else
+		{
+			return false;
+		}
+		return true;
 	}
 
 	//输出
