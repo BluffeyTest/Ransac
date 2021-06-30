@@ -65,7 +65,8 @@ public:
 	 */
 	inline double Length() const
 	{
-		return sqrt(pow(this->pt1.x - this->pt2.x, 2) + pow(this->pt1.y - this->pt2.y, 2));
+		//return sqrt(pow(this->pt1.x - this->pt2.x, 2) + pow(this->pt1.y - this->pt2.y, 2));
+		return this->pt1.Distance(this->pt2);
 	}
 
 	/**

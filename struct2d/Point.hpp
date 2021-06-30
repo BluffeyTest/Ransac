@@ -59,6 +59,16 @@ public:
     {
         return atan2f((float)this->y,(float)this->x);
     }
+
+    /**
+     * @brief 计算到另一个点的距离
+     * @param pt 
+     * @return double 
+     */
+    inline double Distance(const Point_<_T> &pt) const
+    {
+        return sqrt(pow(this->x - pt.x, 2) + pow(this->y - pt.y, 2));
+    }
     
     /*****************************************************************************
      * @brief after unclockwise the vector PI/2, get the angle use as Normal's Angle
