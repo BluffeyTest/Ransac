@@ -18,8 +18,8 @@ private:
 public:
 	//生成和销毁
 	SegmentLine_(/* args */):pt1(_Tp()),pt2(_Tp()){}
-	SegmentLine_(_Tp _p1, _Tp _p2):pt1(_Tp()),pt2(_Tp()){}
-	~SegmentLine_();
+	SegmentLine_(_Tp _p1, _Tp _p2):pt1(_Tp(_p1)),pt2(_Tp(_p2)){}
+	~SegmentLine_(){}
 
 	///<两条线段是否相等
 	inline bool operator==(SegmentLine_ &stS) const
@@ -170,8 +170,7 @@ public:
 	//输出
 	friend std::ostream &operator<<(std::ostream &os, SegmentLine_ &stS)
 	{
-		os << "SegLine: "
-		<< "(" << stS.pt1.x << ", " << stS.pt1.y << ") ----> ( " << stS.pt2.x << ", " << stS.pt2.y << ")";
+		os << "SegLine: " << stS.pt1 << "-->" << stS.pt2;
 		return os;
 	}
 

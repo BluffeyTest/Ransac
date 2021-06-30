@@ -110,8 +110,11 @@ public:
      */
     inline Point_<_T> Rotate(double dAngle,const Point_<_T> &pOri = Point_<_T>((_T)0.0, (_T)0.0)) const
     {
-        return Point_<_T>((x-pOri.x)*cos(dAngle) - (y-pOri.y)*sin(dAngle) + 0.5,
-                    (x-pOri.x)*sin(dAngle)+(y-pOri.y)*cos(dAngle) + 0.5
+        // return Point_<_T>((x-pOri.x)*cos(dAngle) - (y-pOri.y)*sin(dAngle) + 0.5,
+        //             (x-pOri.x)*sin(dAngle)+(y-pOri.y)*cos(dAngle) + 0.5
+        // );
+        return Point_<_T>((x-pOri.x)*cos(dAngle) - (y-pOri.y)*sin(dAngle),
+                    (x-pOri.x)*sin(dAngle)+(y-pOri.y)*cos(dAngle)
         );
     }
 
@@ -243,7 +246,7 @@ public:
      */
     friend std::ostream &operator<<(std::ostream &os, /*const*/ Point_<_T> &pt)
     {
-        os<<"( "<<pt.x<<", "<<pt.y<<" )";
+        os<<"("<<pt.x<<","<<pt.y<<")";
         return os;
     }
 public:
