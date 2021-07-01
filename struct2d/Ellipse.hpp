@@ -4,7 +4,7 @@
 #ifndef ELLIPSE_HPP
 #define ELLIPSE_HPP
 
-#include "Point2d.hpp"
+#include "Point.hpp"
 
 
 /**

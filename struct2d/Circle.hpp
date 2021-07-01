@@ -18,8 +18,6 @@
 #define CIRCLE_HPP
 
 #include "Point.hpp"
-#include "Point2f.hpp"
-#include "Point2d.hpp"
 
 
 /**

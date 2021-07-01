@@ -3,7 +3,7 @@
 #ifndef ELLIPSE_NORMAL_HPP
 #define ELLIPSE_NORMAL_HPP
 
-#include "Point2d.hpp"
+#include "Point.hpp"
 
 
 

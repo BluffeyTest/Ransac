@@ -19,8 +19,6 @@
 #define LINE_HPP
 
 #include "Point.hpp"
-//#include "Point2f.hpp"
-//#include "Point2d.hpp"
 #include "SegmentLine.hpp"
 
 
