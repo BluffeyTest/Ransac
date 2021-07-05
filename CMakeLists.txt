@@ -79,7 +79,14 @@ install(TARGETS Ransac
         )
 
 #安装用于寻找头文件和库文件的cmake文件
+#注意ransac-config.cmake的包名必须小写
 install(EXPORT RansacTargets
     NAMESPACE Ransac::
     FILE ransac-config.cmake
+    DESTINATION lib/cmake/Ransac)
+
+#注意RansacConfig.cmake的包名必须小写
+install(EXPORT RansacTargets
+    NAMESPACE Ransac::
+    FILE RansacConfig.cmake
     DESTINATION lib/cmake/Ransac)
