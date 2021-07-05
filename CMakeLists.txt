@@ -56,30 +56,30 @@ set(Ransac_HEADER_FILES
   Ransac.h
 )
 
-install(
-  FILES ${Ransac_HEADER_FILES}
-  DESTINATION include/Ransac
-)
-
-message("include dir is:${CMAKE_INSTALL_INCLUDEDIR}")
-
-# 指定 Ransac 库的安装路径
-#install(TARGETS Ransac DESTINATION bin)
-#install(FILES Ransac.h DESTINATION include/Ransac)
-#install(FILES S2D DESTINATION include/Ransac/struct2d/)
-#install(FILES struct3d/*.hpp DESTINATION include/Ransac/struct3d/)
+#message("include dir is:${CMAKE_INSTALL_INCLUDEDIR}")
+message("include dir is:${CMAKE_PREFIX_PATH}")
 
 
-# 指定安装路径
-#install(TARGETS Ransac DESTINATION Racnsac/lib)
+# 设置被安装的源文件目录和目标目录，但是好像并不需要
+#target_include_directories(Ransac PUBLIC
+#    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/struct2d ${CMAKE_CURRENT_SOURCE_DIR}/struct3d>
+#    $<INSTALL_INTERFACE:include/Ransac>)
 
+#设置被安装的公共头文件
+set_target_properties(Ransac PROPERTIES PUBLIC_HEADER 
+    "${Ransac_HEADER_FILES}")
 
-# install(TARGETS Ransac 
-#         EXPORT RansacTargets
-#         LIBRARY DESTINATION lib/Ransac
-#         ARCHIVE DESTINATION lib/Ransac
-#         RUNTIME DESTINATION bin/Ransac
-#         PUBLIC_HEADER DESTINATION include/Ransac
-#         )
+#安装头文件、库文件
+install(TARGETS Ransac 
+        EXPORT RansacTargets
+        LIBRARY DESTINATION lib/Ransac
+        ARCHIVE DESTINATION lib/Ransac
+        RUNTIME DESTINATION bin/Ransac
+        PUBLIC_HEADER DESTINATION include/Ransac
+        )
 
-#install(FILES "struct2d/*.hpp" )
+#安装用于寻找头文件和库文件的cmake文件
+install(EXPORT RansacTargets
+    NAMESPACE Ransac::
+    FILE ransac-config.cmake
+    DESTINATION lib/cmake/Ransac)
