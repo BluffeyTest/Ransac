@@ -71,22 +71,22 @@ set_target_properties(Ransac PROPERTIES PUBLIC_HEADER
 
 #安装头文件、库文件
 install(TARGETS Ransac 
-        EXPORT RansacTargets
-        LIBRARY DESTINATION lib/Ransac
-        ARCHIVE DESTINATION lib/Ransac
-        RUNTIME DESTINATION bin/Ransac
+        EXPORT ransac-targets
+        LIBRARY DESTINATION lib#/Ransac
+        ARCHIVE DESTINATION lib#/Ransac
+        RUNTIME DESTINATION bin#/Ransac
         PUBLIC_HEADER DESTINATION include/Ransac
         )
 
 #安装用于寻找头文件和库文件的cmake文件
 #注意ransac-config.cmake的包名必须小写
-install(EXPORT RansacTargets
+install(EXPORT ransac-targets
     NAMESPACE Ransac::
     FILE ransac-config.cmake
     DESTINATION lib/cmake/Ransac)
 
 #注意RansacConfig.cmake的包名必须小写
-install(EXPORT RansacTargets
+install(EXPORT ransac-targets
     NAMESPACE Ransac::
     FILE RansacConfig.cmake
     DESTINATION lib/cmake/Ransac)

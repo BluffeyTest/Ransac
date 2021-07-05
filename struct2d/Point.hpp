@@ -146,7 +146,7 @@ public:
      * @param pt 相加的点
      * @return Point_<_T> 
      */
-    inline Point_<_T> operator+(const Point_<_T> &pt) const
+    inline Point_<_T> operator +(const Point_<_T> &pt) const
     {
         return Point_<_T>(this->x + pt.x, this->y + pt.y);
     }
@@ -157,7 +157,7 @@ public:
      * @param pt 
      * @return Point_<_T> 
      */
-    inline Point_<_T> operator-(const Point_<_T> &pt) const
+    inline Point_<_T> operator -(const Point_<_T> &pt) const
     {
         return Point_<_T>(this->x - pt.x, this->y - pt.y);
     }
@@ -168,7 +168,7 @@ public:
      * @param {type} d 
      * @return Point_<_T> 
      *****************************************************************************/
-    inline Point_<_T> operator*(const _T d)const
+    inline Point_<_T> operator *(const _T d)const
     {
         return Point_<_T>(x*d,y*d);
     }
@@ -181,7 +181,7 @@ public:
      * @return Point_<_T> 
      *****************************************************************************/
     template<typename _T2>
-    inline Point_<_T> operator*(const _T2 d)const
+    inline Point_<_T> operator *(const _T2 d)const
     {
         return Point_<_T>(x*d,y*d);
     }
@@ -192,7 +192,7 @@ public:
      * @param {type} d 
      * @return Point_<_T> 
      *****************************************************************************/
-    inline Point_<_T> operator/(const _T d)const
+    inline Point_<_T> operator /(const _T d)const
     {
         return Point_<_T>(x/d,y/d);
     }
@@ -205,7 +205,7 @@ public:
      * @return Point_<_T> 
      *****************************************************************************/
     template<typename _T2>
-    inline Point_<_T> operator/(const _T2 d)const
+    inline Point_<_T> operator /(const _T2 d)const
     {
         return Point_<_T>(x/d,y/d);
     }
@@ -218,26 +218,33 @@ public:
      * @return false 不相等
      * @return true 相等
      */
-    inline bool operator==(const Point_<_T> &pt) const
+    inline bool operator ==(const Point_<_T> &pt) const
     {
-        switch (typeid(_T))
+        const std::type_info & nInfo = typeid(_T);
+
+        if (nInfo == typeid(int))
         {
-        case typeid(int):
             return (this->x == pt.x && this->y == pt.y);
-            break;//break 是多余的，下同
-        case typeid(float):
+        }
+
+        if (nInfo == typeid(float))
+        {
             const double feps = 1e-3;//float的精度只有六位，算上整数位，一般能有三维小数位是保证精度的就不错了
             return (fabs(this->x - pt.x)<feps && fabs(this->y - pt.y)<feps );
-            break;
-        case typeid(double):
+        }
+
+        if (nInfo == typeid(double))
+        {
             const double deps = 1e-6;//double的精度有15位，算上整数位，所以问题小一些
             return (fabs(this->x - pt.x)<deps && fabs(this->y - pt.y)<deps );
-            break;
-        default:
-            return false;
-            break;
         }
-        //return (this->x == pt.x && this->y == pt.y);
+        
+        return false;
+    }
+
+     inline bool operator !=(const Point_<_T> &pt) const
+    {
+        return !(*this == pt);
     }
 
     /**
