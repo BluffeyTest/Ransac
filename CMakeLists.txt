@@ -33,7 +33,7 @@ set(LIBRARY_OUTPUT_PATH ../lib)
 #SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 SET(CMAKE_PREFIX_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
-add_library(Ransac ${STRUCT2D_SRC} ${STRUCT3D_SRC} Ransac.cpp)
+add_library(Ransac SHARED ${STRUCT2D_SRC} ${STRUCT3D_SRC} Ransac.cpp)
 #add_library(Ransac SHARED ${STRUCT2D_SRC} ${STRUCT3D_SRC} Ransac.cpp)
 #add_executable(testRansac testRansac.cpp Ransac.cpp Struct2d.cpp Struct3d.cpp)
 add_executable(testRansac testRansac.cpp)
@@ -61,9 +61,9 @@ message("include dir is:${CMAKE_PREFIX_PATH}")
 
 
 # 设置被安装的源文件目录和目标目录，但是好像并不需要
-#target_include_directories(Ransac PUBLIC
-#    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/struct2d ${CMAKE_CURRENT_SOURCE_DIR}/struct3d>
-#    $<INSTALL_INTERFACE:include/Ransac>)
+target_include_directories(Ransac PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/struct2d ${CMAKE_CURRENT_SOURCE_DIR}/struct3d>
+    $<INSTALL_INTERFACE:include/Ransac>)
 
 #设置被安装的公共头文件
 set_target_properties(Ransac PROPERTIES PUBLIC_HEADER 
