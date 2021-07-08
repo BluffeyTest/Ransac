@@ -49,6 +49,25 @@ int main(int argc, char **argv)
     //测试符号运算
     cout<<"======== test operator =========="<<endl;
     cout<<"(pt1 == pt2) is "<<(pt1==pt2)<<endl;
+    cout<<"(pt1 != pt2) is "<<(pt1!=pt2)<<endl;
+
+    cout<<"======== test cross =========="<<endl;
+    Pointd ptd1(0.0,0.0),ptd2(1.0,0.0),ptd3(1.0,1.0),ptd4(0.0,1.0);
+    SegLined sl_1(ptd1,ptd2),sl_2(ptd2,ptd3),sl_3(ptd3,ptd1),sl_4(ptd4,ptd3);
+    cout<<"sl_1 cross sl_2 is "<<sl_1.Cross(sl_2)<<endl;
+    cout<<"sl_2 cross sl_3 is "<<sl_2.Cross(sl_3)<<endl;
+    cout<<"sl_3 cross sl_1 is "<<sl_3.Cross(sl_1)<<endl;
+    cout<<"sl_1 cross sl_4 is "<<sl_1.Cross(sl_4)<<endl;
+
+    Pointd ptc_1(-1.0,-1.0),ptc_2(-1.0,-1.0),ptc_3(-1.0,-1.0),ptc_4(-1.0,-1.0);
+    sl_1.crossPoint(sl_2,ptc_1);
+    sl_2.crossPoint(sl_3,ptc_2);
+    sl_3.crossPoint(sl_1,ptc_3);
+    sl_4.crossPoint(sl_1,ptc_4);
+    cout<<"sl_1 corss sl_2 in "<<ptc_1<<endl;
+    cout<<"sl_2 corss sl_3 in "<<ptc_2<<endl;
+    cout<<"sl_3 corss sl_1 in "<<ptc_3<<endl;
+    cout<<"sl_4 corss sl_1 in "<<ptc_4<<endl;
 
     return 0;
 }
