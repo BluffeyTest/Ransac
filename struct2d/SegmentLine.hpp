@@ -57,6 +57,23 @@ public:
 	}
 
 
+	/**
+	 * @brief 计算线段是否包含点
+	 * 
+	 * @param p 
+	 * @return true 
+	 * @return false 
+	 */
+	inline bool contain(_Tp &p)
+	{
+		if((Q.x - pt1.x) * (Pj.y - pt1.y) == (Pj.x - Pi.x) * (Q.y - Pi.y)  //叉乘 
+       		//保证Q点坐标在pi,pj之间 
+       		&& min(Pi.x , Pj.x) <= Q.x && Q.x <= max(Pi.x , Pj.x)    
+       		&& min(Pi.y , Pj.y) <= Q.y && Q.y <= max(Pi.y , Pj.y))
+        return true;
+    else
+        return false;
+	}
 
 	/**
 	 * @brief 线段长度
@@ -195,7 +212,7 @@ typedef SegLine2ld SegLineld;
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
-// 下面的部分不要了
+// 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 
