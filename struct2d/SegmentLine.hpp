@@ -88,8 +88,8 @@ public:
 	{
 		//这个判断看起来有点问题啊，而且运算量有点大
 		if(
-			(pt2-pt1).cross(stS.pt2-stS.pt1)		//两个向量的夹角为0，意思就是没法区分正向反向了
-			&& ((pt2-pt1).dot(stS.pt2-stS.pt1)>0)		//两个平行向量的点积大于零，则两向量同向
+			(pt2-pt1).SameDirector(stS.pt2-stS.pt1)		//两个向量的夹角为0，意思就是没法区分正向反向了
+			//&& ((pt2-pt1).dot(stS.pt2-stS.pt1)>0)		//两个平行向量的点积大于零，则两向量同向
 			&& (Contain(stS.pt1)						//线段2的起点在线段1上
 				|| Contain(stS.pt2)						//线段2的终点在线段1上
 			)

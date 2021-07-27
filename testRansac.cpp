@@ -75,10 +75,36 @@ int main(int argc, char **argv)
     cout<<v_1<<" || "<<v_2<< " = "<<(v_1||v_2)<<endl; 
     cout<<v_3<<" || "<<v_4<< " = "<<(v_3||v_4)<<endl;
 
+    //测试一个点在线段内
+    cout<<"======== test point in segment =========="<<endl;
+    Pointd pt_mid(0.5,0.5);
+    cout<<ptd1<<" in "<<sl_3<<" is "<<sl_3.Contain(ptd1)<<endl;
+    cout<<ptd3<<" in "<<sl_3<<" is "<<sl_3.Contain(ptd3)<<endl;
+    cout<<ptd4<<" in "<<sl_3<<" is "<<sl_3.Contain(ptd4)<<endl;
+    cout<<pt_mid<<" in "<<sl_3<<" is "<<sl_3.Contain(pt_mid)<<endl;
+
     //测试平行且同向
     cout<<"======== test || and direction =========="<<endl;
     cout<<v_1<<" SameDirector with "<<v_1<< " = "<<(v_1.SameDirector(v_1))<<endl; 
     cout<<v_3<<" SameDirector with "<<v_4<< " = "<<(v_3.SameDirector(v_4))<<endl;
+    cout<<v_1<<" SameDirector with "<<v_4<< " = "<<(v_1.SameDirector(v_4))<<endl;
+
+    cout<<"======== test merge segment =========="<<endl;
+    //测试合并平行且同向的线段合并
+    SegLine2d L_1(Point2d(0.0,0.0),Point2d(2.0,2.0));
+    SegLine2d L_2(Point2d(1.0,1.0),Point2d(3.0,3.0));
+    SegLine2d L_3(Point2d(0.0,0.0),Point2d(-2.0,-2.0));
+    SegLine2d L_4(Point2d(1.0,1.5),Point2d(3.0,3.0));
+
+    bool bm_1,bm_2,bm_3,bm_4;
+    SegLine2d L_out_1,L_out_2,L_out_3,L_out_4;
+    bm_1 = L_1.Merge(L_2,L_out_1);
+    bm_2 = L_1.Merge(L_3,L_out_2);
+    bm_3 = L_1.Merge(L_4,L_out_3);
+    //bm_1 = L_1.Merge(L_2,L_out_1);
+    cout<<L_1<<" merge "<<L_2<<" is "<<bm_1<<", "<<L_out_1<<endl;
+    cout<<L_1<<" merge "<<L_3<<" is "<<bm_2<<", "<<L_out_2<<endl;
+    cout<<L_1<<" merge "<<L_4<<" is "<<bm_3<<", "<<L_out_3<<endl;
 
     return 0;
 }

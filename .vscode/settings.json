@@ -64,6 +64,7 @@
         "iomanip": "cpp",
         "sstream": "cpp",
         "thread": "cpp",
-        "cinttypes": "cpp"
+        "cinttypes": "cpp",
+        "geometry": "cpp"
     }
 }
