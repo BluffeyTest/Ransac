@@ -68,12 +68,14 @@ int main(int argc, char **argv)
     cout<<"sl_2 corss sl_3 in "<<ptc_2<<endl;
     cout<<"sl_3 corss sl_1 in "<<ptc_3<<endl;
     cout<<"sl_4 corss sl_1 in "<<ptc_4<<endl;
-
+    
+    //测试平行
     cout<<"======== test || =========="<<endl;
     vecd v_1(1.,1.),v_2(-1.,-1.),v_3(0.,1.),v_4(0.,-1.);
     cout<<v_1<<" || "<<v_2<< " = "<<(v_1||v_2)<<endl; 
     cout<<v_3<<" || "<<v_4<< " = "<<(v_3||v_4)<<endl;
 
+    //测试平行且同向
     cout<<"======== test || and direction =========="<<endl;
     cout<<v_1<<" SameDirector with "<<v_1<< " = "<<(v_1.SameDirector(v_1))<<endl; 
     cout<<v_3<<" SameDirector with "<<v_4<< " = "<<(v_3.SameDirector(v_4))<<endl;
