@@ -49,8 +49,6 @@ public:
         return Point_<_T2>(_T2(x), _T2(y));//这儿要留意
     }
 
-    bool operator||(const Point_<_T> &pt)const;	///<两个向量是否方向相同
-
     /******************************************************************************
      * @brief 向量与x轴的夹角
      * @return double 
@@ -152,13 +150,30 @@ public:
     /*****************************************************************************
      * @brief 向量的叉积
      * 
-     * @param {type} v 
+     * @param[in] v 
      * @return _T 
      *****************************************************************************/
     inline _T cross(const Point_<_T> &v)const
     {
         //return x*v.y+y*v.x;
         return x*v.y-y*v.x;
+    }
+
+    /**
+     * @brief 两个向量是否平行，同向平行和反向平行都包括
+     * 
+     * @param v 另一个向量
+     * @return true     平行
+     * @return false    不平行
+     */
+    inline bool operator ||(const Point_<_T> &v)const
+    {
+        return std::abs(cross(v))< 1e-6;
+    }
+
+    inline bool SameDirector(const Point_<_T> &v)const
+    {
+        return std::abs(cross(v))< 1e-6 && dot(v)>0;
     }
 
     /**
