@@ -171,9 +171,28 @@ public:
         return std::abs(cross(v))< 1e-6;
     }
 
+    /*****************************************************************************
+     * @brief 向量同向
+     * @details 两向量平行，且点积为正则两向量同向
+     * @param v 
+     * @return true 
+     * @return false 
+     *****************************************************************************/
     inline bool SameDirector(const Point_<_T> &v)const
     {
         return std::abs(cross(v))< 1e-6 && dot(v)>0;
+    }
+
+    /*****************************************************************************
+     * @brief 向量反向
+     * @details 两向量平行，且点积为反则两向量反向
+     * @param v 
+     * @return true 
+     * @return false 
+     *****************************************************************************/
+    inline bool OppositeDirector(const Point_<_T> &v)const
+    {
+        return std::abs(cross(v))<1e-6 && dot(v)<0
     }
 
     /**

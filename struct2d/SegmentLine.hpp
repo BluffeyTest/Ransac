@@ -64,7 +64,7 @@ public:
 	 * @return true 	点在线上
 	 * @return false 	点不在线上
 	 */
-	inline bool Contain(_Tp &p)
+	inline bool Contain(_Tp &p)const
 	{
 		if(((p-pt1)||(pt2-pt1))		//pt1-->p 和 pt1-->pt2 平行
 			//(Q.x - pt1.x) * (Pj.y - pt1.y) == (Pj.x - Pi.x) * (Q.y - Pi.y)  //叉乘 
@@ -83,12 +83,40 @@ public:
 	 * @param stS 
 	 * @return true 	两线段平行，同向且重合
 	 * @return false 
+	 * @sa SameDirector 
 	 */
-	inline bool Coincide(SegmentLine_<_Tp> &stS)
+	inline bool Coincide(SegmentLine_<_Tp> &stS)const
 	{
 		//这个判断看起来有点问题啊，而且运算量有点大
 		if(
 			(pt2-pt1).SameDirector(stS.pt2-stS.pt1)		//两个向量的夹角为0，意思就是没法区分正向反向了
+			//&& ((pt2-pt1).dot(stS.pt2-stS.pt1)>0)		//两个平行向量的点积大于零，则两向量同向
+			&& (Contain(stS.pt1)						//线段2的起点在线段1上
+				|| Contain(stS.pt2)						//线段2的终点在线段1上
+			)
+		)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	/*****************************************************************************
+	 * @brief 两线段是否反向重合
+	 * 
+	 * @param stS 
+	 * @return true 两向量平行反向，且有重合
+	 * @return false 
+	 * @sa Coincide , OppositeDirector , SameDirector
+	 *****************************************************************************/
+	inline bool OppositeCoincide(SegmentLine_<_Tp> &stS)const
+	{
+		//这个判断看起来有点问题啊，而且运算量有点大
+		if(
+			(pt2-pt1).OppositeDirector(stS.pt2-stS.pt1)		//两个向量的夹角为0，意思就是没法区分正向反向了
 			//&& ((pt2-pt1).dot(stS.pt2-stS.pt1)>0)		//两个平行向量的点积大于零，则两向量同向
 			&& (Contain(stS.pt1)						//线段2的起点在线段1上
 				|| Contain(stS.pt2)						//线段2的终点在线段1上
@@ -111,7 +139,7 @@ public:
 	 * @return true 		成功合并
 	 * @return false 		未能成功合并
 	 */
-	inline bool Merge(SegmentLine_<_Tp> &stS, SegmentLine_<_Tp> &stSOut)
+	inline bool Merge(SegmentLine_<_Tp> &stS, SegmentLine_<_Tp> &stSOut)const
 	{
 		if(Coincide(stS))
 		{
@@ -124,6 +152,11 @@ public:
 		{
 			return false;
 		}
+	}
+
+	inline bool Union(SegmentLine_<_Tp> &stS, SegmentLine_<_Tp> &stSOut)const
+	{
+		if
 	}
 
 	/**
