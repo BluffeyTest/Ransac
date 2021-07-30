@@ -192,7 +192,7 @@ public:
      *****************************************************************************/
     inline bool OppositeDirector(const Point_<_T> &v)const
     {
-        return std::abs(cross(v))<1e-6 && dot(v)<0
+        return std::abs(cross(v))<1e-6 && dot(v)<0;
     }
 
     /**

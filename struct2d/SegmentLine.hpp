@@ -153,10 +153,29 @@ public:
 			return false;
 		}
 	}
-
+	
+	/*****************************************************************************
+	 * @brief 取得两个反向线段的并集
+	 * @details 以靠近第一段线段起点的点为起点，以靠近第一段线段终点的点为终点
+	 * 
+	 * @param {type} stS 
+	 * @param {type} stSOut 
+	 * @return true 
+	 * @return false 
+	 *****************************************************************************/
 	inline bool Union(SegmentLine_<_Tp> &stS, SegmentLine_<_Tp> &stSOut)const
 	{
-		if
+		if(OppositeCoincide(stS))
+		{
+			stSOut.pt1 = Contain(stS.pt2)?stS.pt2:pt1;
+			stSOut.pt2 = Contain(stS.pt1)?stS.pt1:pt2;
+
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	/**
