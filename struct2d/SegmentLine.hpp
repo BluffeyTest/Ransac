@@ -297,6 +297,18 @@ public:
 		return true;
 	}
 
+	/*****************************************************************************
+	 * @brief 检查两线段是否平行
+	 * 
+	 * @param {type} stS 
+	 * @return true 
+	 * @return false 
+	 *****************************************************************************/
+	inline bool operator ||(const SegmentLine_<_Tp> &stS)const
+    {
+        return (this->pt2 - this->pt1)||(stS.pt2-stS.pt1);
+    }
+
 	//输出
 	friend std::ostream &operator<<(std::ostream &os, SegmentLine_ &stS)
 	{
