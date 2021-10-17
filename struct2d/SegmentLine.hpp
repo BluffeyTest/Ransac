@@ -273,7 +273,7 @@ public:
 	 * $==> p_1 - p_2 + a_1*v_1-a_2*v_2 = 0$
 	 * $==>
 	 * 
-	 * 
+	 * 注意，两个叉积都为零的情况下，计算处的点是不对的，所以要排除这种情况
 	 * @param {type} stS 
 	 * @param {type} pt 
 	 * @return true 相交且解算出来了
@@ -287,6 +287,13 @@ public:
 			//TODO:
 			auto s1 = (stS.pt1 - pt1).cross(stS.pt2 - pt1);
 			auto s2 = (stS.pt2 - pt2).cross(stS.pt1 - pt2);
+
+			//共线的情况没有意义
+			if (std::abs(s1)<1e-6 && std::abs(s2)<1e-6)
+			{
+				return false;
+			}
+			
 			pt = pt1+(pt2-pt1)*s1/(s1+s2);
 
 		}
