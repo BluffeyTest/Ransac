@@ -2,7 +2,13 @@ cmake_minimum_required(VERSION 3.1)
 
 set(CMAKE_CXX_FLAGS "-std=c++11")
 
+#设置总的安装路径
+SET(CMAKE_INSTALL_PREFIX /usr/local/Ransac)
+set(INSTALL_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include)
+
 project(Ransac VERSION 1.1.0)
+
+
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
@@ -62,31 +68,62 @@ message("include dir is:${CMAKE_PREFIX_PATH}")
 
 # 设置被安装的源文件目录和目标目录，但是好像并不需要
 target_include_directories(Ransac PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/struct2d ${CMAKE_CURRENT_SOURCE_DIR}/struct3d>
-    $<INSTALL_INTERFACE:include/Ransac>)
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/struct2d>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/include/struct2d>)
+
+target_include_directories(Ransac PUBLIC
+    $<BUILD_INTERFACE: ${CMAKE_CURRENT_SOURCE_DIR}/struct3d>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/include/struct3d>)
 
 #设置被安装的公共头文件
-set_target_properties(Ransac PROPERTIES PUBLIC_HEADER 
-    "${Ransac_HEADER_FILES}")
+# set_target_properties(Ransac PROPERTIES PUBLIC_HEADER 
+#     "${Ransac_HEADER_FILES}")
+
+#message("the heders is ${Ransac_HEADER_FILES}")
+
+set_target_properties(Ransac
+  PROPERTIES
+  POSITION_INDEPENDENT_CODE 1
+  SOVERSION ${PROJECT_VERSION_MAJOR}
+  OUTPUT_NAME "Ransac"
+  DEBUG_POSTFIX "_d"
+  Ransac_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include
+  PUBLIC_HEADER "Ransac.h"
+  MACOSX_RPATH ON
+  WINDOWS_EXPORT_ALL_SYMBOLS ON
+)
 
 #安装头文件、库文件
+# install(TARGETS Ransac 
+#         EXPORT ransac-targets
+#         LIBRARY DESTINATION lib#/Ransac
+#         ARCHIVE DESTINATION lib#/Ransac
+#         RUNTIME DESTINATION bin#/Ransac
+#         PUBLIC_HEADER DESTINATION include/Ransac
+#         )
+
+
 install(TARGETS Ransac 
         EXPORT ransac-targets
-        LIBRARY DESTINATION lib#/Ransac
-        ARCHIVE DESTINATION lib#/Ransac
-        RUNTIME DESTINATION bin#/Ransac
-        PUBLIC_HEADER DESTINATION include/Ransac
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+        #PUBLIC_HEADER DESTINATION include/Ransac
         )
+
+#set(STRUCT2D_HEADERS ./struct2d/Point.hpp)
+
 
 #安装用于寻找头文件和库文件的cmake文件
 #注意ransac-config.cmake的包名必须小写
 install(EXPORT ransac-targets
     NAMESPACE Ransac::
     FILE ransac-config.cmake
-    DESTINATION lib/cmake/Ransac)
+    DESTINATION lib/cmake)
 
 #注意RansacConfig.cmake的包名必须小写
 install(EXPORT ransac-targets
     NAMESPACE Ransac::
     FILE RansacConfig.cmake
-    DESTINATION lib/cmake/Ransac)
+    DESTINATION lib/cmake)
