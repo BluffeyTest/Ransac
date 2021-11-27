@@ -9,7 +9,15 @@
 #     ${CMAKE_INSTALL_INCLUDEDIR})
 
 
-install(FILES Point.hpp
+install(FILES 
+        Point.hpp
+        Arc.hpp
+        Circle.hpp
+        Ellipse.hpp
+        EllipseNormal.hpp
+        Line.hpp
+        SegmentLine.hpp
+        Struct2d.hpp
         #TYPE INCLUDE 
         DESTINATION ${INSTALL_INCLUDE_DIR}/struct2d
         )
