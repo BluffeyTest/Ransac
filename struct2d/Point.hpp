@@ -119,7 +119,7 @@ public:
      */
     inline double Length()
     {
-        return std::sqrt((double)(x * x + y + y));
+        return std::sqrt((double)(x * x + y * y));
     }
 
     /**
